@@ -46,7 +46,8 @@ var app = (function ($, app, document) {
             app.deviceInfo = app.utils.guid();
             app.storage.set("deviceInfo", app.deviceInfo);
             try {
-                cordova.require("cordova/plugin/DeviceInformation").get(function (result_str) {
+                var devInfo = cordova.require("cordova/plugin/DeviceInformation");
+                devInfo.get(function (result_str) {
                     app.log(result_str);
                     var res = JSON.parse(result_str);
                     app.log(res);
@@ -74,6 +75,7 @@ var app = (function ($, app, document) {
                     onSuccess(app.deviceInfo);
                 });
             } catch (e) {
+                app.log("failed to load deviceInfo plugin");
                 onSuccess(app.deviceInfo);
             }
         } else {
