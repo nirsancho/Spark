@@ -450,7 +450,7 @@ var app = (function ($, app, document) {
 
     app.contacts = {};
     app.contacts.save = function (contacts) {
-        contacts = contacts.slice(0, 5);
+        contacts = contacts.slice(0, 100);
         $.each(contacts, function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
@@ -462,7 +462,7 @@ var app = (function ($, app, document) {
                 owner: app.user.current
             }, {
                 success: function (contact) {
-                    app.log("saved: " + contact.displayName);
+                    app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
                 },
                 error: function (gameScore, error) {}
             });
