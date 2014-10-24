@@ -460,9 +460,12 @@ var app = (function ($, app, document) {
                 emails: this.emails,
                 phoneNumbers: this.phoneNumbers,
                 owner: app.user.current
-            }, function (contact) {
-                app.log("saved: " + contact.displayName)
-            }, null);
+            }, {
+                success: function (contact) {
+                    app.log("saved: " + contact.displayName);
+                },
+                error: function (gameScore, error) {}
+            });
         });
     }
 
