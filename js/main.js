@@ -1,6 +1,6 @@
 var app = (function ($, app, console, document) {
     app = app || {};
-    app.ver = "1.0.4";
+    app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.13:8080/"
 
     app.lang = "es";
@@ -427,6 +427,8 @@ var app = (function ($, app, console, document) {
 
 
     app.get_all_contacts = function () {
+        app.log('starting get_all_contacts');
+
         function onSuccess(contacts) {
             app.log('Found ' + contacts.length + ' contacts.');
             app.log(contacts);
@@ -436,9 +438,12 @@ var app = (function ($, app, console, document) {
             app.log('onError!');
             app.log(contactError);
         };
+        var fields = ["*"];
+        navigator.contacts.find(fields, onSuccess, onError);
 
-        navigator.contacts.find(["*"], onSuccess, onError);
+        app.log('done get_all_contacts');
     }
 
+    app.log('loading version: ' + app.ver);
     return app;
 }($, app, console, document));
