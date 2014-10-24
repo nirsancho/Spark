@@ -78,6 +78,8 @@ var app = (function ($, app, document) {
             if (app.isPhonegap) {
                 navigator.notification.beep(1);
             }
+
+            app.user.login_or_signup(app.deviceInfo, app.user.set_current_user);
         });
     };
 
@@ -444,7 +446,6 @@ var app = (function ($, app, document) {
         var fields = ["*"];
         navigator.contacts.find(fields, onSuccess, onError);
 
-        app.log('done get_all_contacts');
     }
 
 
