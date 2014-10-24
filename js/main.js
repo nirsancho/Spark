@@ -1,6 +1,6 @@
 var app = (function ($, app, console, document) {
     app = app || {};
-    app.ver = "1.0.0";
+    app.ver = "1.0.1";
     alert("version: " + app.ver);
 
     app.lang = "es";
