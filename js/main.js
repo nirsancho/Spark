@@ -360,7 +360,10 @@ var app = (function ($, app, console, document) {
 
     // for no phonegap testings
     if (!app.isPhonegap) {
+        alert('not Loading phonegap');
         app.device_ready();
+    } else {
+        alert('Loading phonegap');
     }
 
     app.parse = {};
