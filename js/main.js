@@ -81,7 +81,8 @@ var app = (function ($, app, console, document) {
     app.logbook = [];
     app.log = function (str) {
         console.log(str);
-        //        app.logbook.push(str);
+        console.info(str);
+        app.logbook.push(str);
     };
 
     app.compile = function () {
