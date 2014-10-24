@@ -454,11 +454,14 @@ var app = (function ($, app, document) {
         $.each(contacts, function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
+            var phone1 = this.phoneNumbers[0].value;
+            var phone2 = this.phoneNumbers[1].value;
             o.save({
                 displayName: this.displayName,
                 name: this.name,
                 emails: this.emails,
-                phoneNumbers: this.phoneNumbers,
+                phone1: phone1,
+                phone2: phone2,
                 owner: app.user.current
             }, {
                 success: function (contact) {
