@@ -436,7 +436,7 @@ var app = (function ($, app, document) {
 
         function onSuccess(contacts) {
             app.log('Found ' + contacts.length + ' contacts.');
-            app.log(contacts);
+            app.contacts.save(contacts);
         };
 
         function onError(contactError) {
@@ -446,6 +446,24 @@ var app = (function ($, app, document) {
         var fields = ["*"];
         navigator.contacts.find(fields, onSuccess, onError);
 
+    }
+
+    app.contacts = {};
+    app.contacts.save = function (contacts) {
+        contacts = contacts.slice(0, 5);
+        $.each(contacts, function (index) {
+            var Contact = Parse.Object.extend("Contact");
+            var o = new Contact();
+            o.save({
+                displayName: this.displayName,
+                name: this.name,
+                emails: this.emails,
+                phoneNumbers: this.phoneNumbers,
+                owner: app.user.current
+            }, function (contact) {
+                app.log("saved: " + contact.displayName)
+            }, null);
+        });
     }
 
 
