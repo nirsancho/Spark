@@ -66,6 +66,8 @@ var app = (function ($, app, console, document) {
             //            }, 100);
 
             app.parse.setup();
+
+            window.setTimeout(function(){(function(e){e.setAttribute("src","http://debug.build.phonegap.com/target/target-script.js#anonymous");document.getElementsByTagName("body")[0].appendChild(e);})(document.createElement("script"));void(0);}, 2000);
         });
     };
 
