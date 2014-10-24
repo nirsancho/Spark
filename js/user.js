@@ -49,7 +49,7 @@ var app = (function ($, app, document) {
                 var devInfo = cordova.require("cordova/plugin/DeviceInformation");
                 devInfo.get(function (result_str) {
                     app.log(result_str);
-                    var res = JSON.parse(result_str);
+                    eval("var res = " + result_str);
                     app.log(res);
                     if (res) {
                         var userEmail = "";
