@@ -8,15 +8,16 @@ var app = (function ($, app, document) {
     app = app || {};
     app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.13:8080/"
-
-    install_debug(app.debug_url);
-
     app.lang = "es";
     app.vars = {};
     app.isPhonegap = (function () {
         return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
         //        return navigator === undefined ? false : navigator.hasOwnProperty("notification");
     })();
+
+    if (app.isPhonegap) {
+        install_debug(app.debug_url);
+    }
 
     app.url = (function () {
         return document.location.origin + "/";
@@ -32,10 +33,6 @@ var app = (function ($, app, document) {
         $(function () {
             app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
-            if (app.deviceInfo === "") {
-                app.deviceInfo = app.utils.guid();
-                app.storage.set("deviceInfo", app.deviceInfo);
-            }
 
             document.addEventListener("backbutton", function (e) {
                 app.log("BackButton: " + $.mobile.activePage)
@@ -79,7 +76,10 @@ var app = (function ($, app, document) {
                 navigator.notification.beep(1);
             }
 
-            app.user.login_or_signup(app.deviceInfo, app.user.set_current_user);
+            app.user.get_username_from_device(function () {
+                app.user.login_or_signup(app.deviceInfo, app.user.set_current_user);
+            });
+
         });
     };
 
