@@ -4,7 +4,7 @@ var app = (function ($, app, console, document) {
     app.vars = {};
     app.isPhonegap = (function () {
         return document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-        return navigator === undefined ? false : navigator.hasOwnProperty("notification");
+//        return navigator === undefined ? false : navigator.hasOwnProperty("notification");
     })();
 
     app.url = (function () {
@@ -396,7 +396,7 @@ var app = (function ($, app, console, document) {
 
     app.setup_static_pages = function () {
         for (var page = 0; page < app.content.length; page++) {
-            var page_name = (page < app.content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval';
+            var page_name = (page < app.content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval.html';
 
             var html = '<div data-role="page" id="page-' + page + '">';
             html += '<div data-role="content">' + app.content[page];
