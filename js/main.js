@@ -428,21 +428,21 @@ var app = (function ($, app, console, document) {
 
 
     app.get_all_contacts = function () {
-        app.log('starting get_all_contacts');
+        console.log('starting get_all_contacts');
 
         function onSuccess(contacts) {
-            app.log('Found ' + contacts.length + ' contacts.');
-            app.log(contacts);
+            console.log('Found ' + contacts.length + ' contacts.');
+            console.log(contacts);
         };
 
         function onError(contactError) {
-            app.log('onError!');
-            app.log(contactError);
+            console.log('onError!');
+            console.log(contactError);
         };
         var fields = ["*"];
         navigator.contacts.find(fields, onSuccess, onError);
 
-        app.log('done get_all_contacts');
+        console.log('done get_all_contacts');
     }
 
     app.log('loading version: ' + app.ver);
