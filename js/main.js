@@ -1,4 +1,3 @@
-
 function install_debug(debug_url) {
     var e = document.createElement("script");
     e.setAttribute("src", debug_url + "/target/target-script.js#anonymous");
@@ -31,7 +30,7 @@ var app = (function ($, app, document) {
 
     app.device_ready = function () {
         $(function () {
-
+            app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
             if (app.deviceInfo === "") {
                 app.deviceInfo = app.utils.guid();
@@ -85,7 +84,7 @@ var app = (function ($, app, document) {
     app.logbook = [];
     app.log = function (str) {
         console.log(str);
-       // app.logbook.push(str);
+        // app.logbook.push(str);
     };
 
     app.compile = function () {
@@ -448,6 +447,6 @@ var app = (function ($, app, document) {
         app.log('done get_all_contacts');
     }
 
-    app.log('loading version: ' + app.ver);
+
     return app;
 }($, app, document));
