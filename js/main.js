@@ -1,6 +1,6 @@
 var app = (function ($, app, console, document) {
     app = app || {};
-    app.ver = "1.0.2";
+    app.ver = "1.0.3";
     app.debug_url = "http://192.168.1.13:8080/"
     alert("version: " + app.ver);
 

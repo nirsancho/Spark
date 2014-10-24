@@ -35,10 +35,9 @@
 
     <icon src="icons/Icon-72.png" gap:platform="blackberry" />
 
-    <feature name="http://api.phonegap.com/1.0/internet"/>
-    <feature name="http://api.phonegap.com/1.0/contacts"/>
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/notification"/>
+    <gap:plugin name="org.apache.cordova.contacts" version="0.2.13" />
+    <gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />
+    <gap:plugin name="com.vliesaputra.deviceinformation" version="1.0.1" />
 
 <!--    <access origin="http://192.168.1.100/" subdomains="true"/>
     <access origin="http://kablito.webhosting.co.zw/" subdomains="true"/>
