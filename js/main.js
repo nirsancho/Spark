@@ -1,5 +1,8 @@
 var app = (function ($, app, console, document) {
     app = app || {};
+    app.ver = "1.0.0";
+    alert("version: " + app.ver);
+
     app.lang = "es";
     app.vars = {};
     app.isPhonegap = (function () {
