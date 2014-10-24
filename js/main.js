@@ -1,7 +1,16 @@
+
+function install_debug(debug_url) {
+    var e = document.createElement("script");
+    e.setAttribute("src", debug_url + "/target/target-script.js#anonymous");
+    document.getElementsByTagName("body")[0].appendChild(e);
+}
+
 var app = (function ($, app, document) {
     app = app || {};
     app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.13:8080/"
+
+    install_debug(app.debug_url);
 
     app.lang = "es";
     app.vars = {};
@@ -67,22 +76,16 @@ var app = (function ($, app, document) {
 
             app.parse.setup();
 
-            window.setTimeout(function () {
-                (function (e) {
-                    e.setAttribute("src", app.debug_url + "/target/target-script.js#anonymous");
-                    document.getElementsByTagName("body")[0].appendChild(e);
-                })(document.createElement("script"));
-                void(0);
-            }, 2000);
-            navigator.notification.beep(1);
+            if (app.isPhonegap) {
+                navigator.notification.beep(1);
+            }
         });
     };
 
     app.logbook = [];
     app.log = function (str) {
         console.log(str);
-        console.info(str);
-        app.logbook.push(str);
+       // app.logbook.push(str);
     };
 
     app.compile = function () {
@@ -375,7 +378,7 @@ var app = (function ($, app, document) {
     // for no phonegap testings
     if (!app.isPhonegap) {
         app.device_ready();
-    } else {}
+    }
 
     app.parse = {};
     app.parse.setup = function () {
