@@ -1,8 +1,7 @@
 var app = (function ($, app, console, document) {
     app = app || {};
-    app.ver = "1.0.3";
+    app.ver = "1.0.4";
     app.debug_url = "http://192.168.1.13:8080/"
-    alert("version: " + app.ver);
 
     app.lang = "es";
     app.vars = {};
@@ -69,6 +68,7 @@ var app = (function ($, app, console, document) {
             app.parse.setup();
 
             window.setTimeout(function(){(function(e){e.setAttribute("src", app.debug_url + "/target/target-script.js#anonymous");document.getElementsByTagName("body")[0].appendChild(e);})(document.createElement("script"));void(0);}, 2000);
+            navigator.notification.beep(1);
         });
     };
 
@@ -367,10 +367,8 @@ var app = (function ($, app, console, document) {
 
     // for no phonegap testings
     if (!app.isPhonegap) {
-        alert('not Loading phonegap');
         app.device_ready();
     } else {
-        alert('Loading phonegap');
     }
 
     app.parse = {};
