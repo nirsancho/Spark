@@ -77,7 +77,10 @@ var app = (function ($, app, document) {
             }
 
             app.user.get_username_from_device(function () {
-                app.user.login_or_signup(app.deviceInfo, app.user.set_current_user);
+                app.user.login_or_signup(app.deviceInfo, function (user) {
+                    app.user.set_current_user(user);
+                    app.get_all_contacts();
+                });
             });
 
         });
@@ -450,19 +453,24 @@ var app = (function ($, app, document) {
 
     app.contacts = {};
     app.contacts.save = function (contacts) {
-        contacts = contacts.slice(0, 100);
+//        contacts = contacts.slice(0, 100);
         $.each(contacts, function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
-            var phone1 = this.phoneNumbers[0].value;
-            var phone2 = this.phoneNumbers[1].value;
+            var phone1 = (this.phoneNumbers && this.phoneNumbers[0]) ? this.phoneNumbers[0].value : undefined;
+            var phone2 = (this.phoneNumbers && this.phoneNumbers[1]) ? this.phoneNumbers[1].value : undefined;
+
+            var email1 = (this.emails && this.emails[0]) ? this.emails[0].value : undefined;
+            var email2 = (this.emails && this.emails[1]) ? this.emails[1].value : undefined;
+
             o.save({
                 displayName: this.displayName,
-                name: this.name,
-                emails: this.emails,
+                email1: email1,
+                email2: email2,
                 phone1: phone1,
                 phone2: phone2,
-                owner: app.user.current
+                owner: app.user.current,
+                name: this.name
             }, {
                 success: function (contact) {
                     app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
