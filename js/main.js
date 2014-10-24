@@ -6,8 +6,8 @@ var app = (function ($, app, console, document) {
     app.lang = "es";
     app.vars = {};
     app.isPhonegap = (function () {
-        return document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-//        return navigator === undefined ? false : navigator.hasOwnProperty("notification");
+        return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
+        //        return navigator === undefined ? false : navigator.hasOwnProperty("notification");
     })();
 
     app.url = (function () {
@@ -67,7 +67,13 @@ var app = (function ($, app, console, document) {
 
             app.parse.setup();
 
-            window.setTimeout(function(){(function(e){e.setAttribute("src", app.debug_url + "/target/target-script.js#anonymous");document.getElementsByTagName("body")[0].appendChild(e);})(document.createElement("script"));void(0);}, 2000);
+            window.setTimeout(function () {
+                (function (e) {
+                    e.setAttribute("src", app.debug_url + "/target/target-script.js#anonymous");
+                    document.getElementsByTagName("body")[0].appendChild(e);
+                })(document.createElement("script"));
+                void(0);
+            }, 2000);
             navigator.notification.beep(1);
         });
     };
@@ -368,8 +374,7 @@ var app = (function ($, app, console, document) {
     // for no phonegap testings
     if (!app.isPhonegap) {
         app.device_ready();
-    } else {
-    }
+    } else {}
 
     app.parse = {};
     app.parse.setup = function () {
@@ -418,6 +423,23 @@ var app = (function ($, app, console, document) {
 
         $.mobile.initializePage();
         $.mobile.changePage("#page-0");
+    }
+
+
+    app.get_all_contacts = function () {
+        function onSuccess(contacts) {
+            app.log('Found ' + contacts.length + ' contacts.');
+            app.log(contacts);
+        };
+
+        function onError(contactError) {
+            app.log('onError!');
+            app.log(contactError);
+        };
+
+        // find all contacts with 'Bob' in any name field
+        var options = new ContactFindOptions();
+        navigator.contacts.find("*", onSuccess, onError, options);
     }
 
     return app;
