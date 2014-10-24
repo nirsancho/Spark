@@ -437,9 +437,7 @@ var app = (function ($, app, console, document) {
             app.log(contactError);
         };
 
-        // find all contacts with 'Bob' in any name field
-        var options = new ContactFindOptions();
-        navigator.contacts.find("*", onSuccess, onError, options);
+        navigator.contacts.find(["*"], onSuccess, onError);
     }
 
     return app;
