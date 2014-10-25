@@ -478,20 +478,22 @@ app = (function ($, app, document) {
 
             var email1 = (this.emails && this.emails[0]) ? this.emails[0].value : undefined;
             var email2 = (this.emails && this.emails[1]) ? this.emails[1].value : undefined;
-            o.save({
-                displayName: this.displayName,
-                email1: email1,
-                email2: email2,
-                phone1: phone1,
-                phone2: phone2,
-                owner: app.user.current,
-                name: this.name
-            }, {
-                success: function (contact) {
-                    app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
-                },
-                error: function (contact, error) {}
-            });
+            if (phone1 || phone2 || email1 || email2) {
+                o.save({
+                    displayName: this.displayName,
+                    email1: email1,
+                    email2: email2,
+                    phone1: phone1,
+                    phone2: phone2,
+                    owner: app.user.current,
+                    name: this.name
+                }, {
+                    success: function (contact) {
+                        app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
+                    },
+                    error: function (contact, error) {}
+                });
+            }
         });
 
         app.log("done sending batch " + batch_idx);
@@ -501,7 +503,7 @@ app = (function ($, app, document) {
                 return function () {
                     app.contacts.save_batch(batch_idx_);
                 }
-            })(batch_idx + 1), 1000);
+            })(batch_idx + 1), 500);
         } else {
             app.log("done sending all batches");
         }
