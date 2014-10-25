@@ -1,11 +1,13 @@
 app = (function ($, app, document) {
     app = app || {};
     app.contacts = app.contacts || {};
-    app.contact.save_process_done = false;
+    app.contacts.save_process_done = false;
+
+    console.log(app)
 
     app.contacts.get_all = function () {
         app.log('starting app.contacts.get_all');
-        app.contact.save_process_done = false;
+        app.contacts.save_process_done = false;
         var fields = ["*"];
 
         navigator.contacts.find(fields, function (contacts) {
@@ -69,7 +71,7 @@ app = (function ($, app, document) {
                 }
             })(batch_idx + 1), 750);
         } else {
-            app.contact.save_process_done = true;
+            app.contacts.save_process_done = true;
             app.user.current.set("contacts_saved", true);
             app.user.current.save();
             app.log("done sending all batches");
