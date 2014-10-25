@@ -394,7 +394,7 @@ app = (function ($, app, document) {
 
     app.setup_static_pages = function (content) {
         for (var page = 0; page < content.length; page++) {
-            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval.html';
+            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#page-approval';
 
             var html = '<div data-role="page" id="page-' + page + '">';
             html += '<div data-role="content">' + content[page];
@@ -407,14 +407,18 @@ app = (function ($, app, document) {
 
             html += '</div>'; // close page
 
-            $("body").append(html);
+            $(html).appendTo($.mobile.pageContainer);
         }
 
         //        $.mobile.initializePage();
-         $.mobile.changePage("#page-0");
+        $.mobile.changePage("#page-0");
 
     }
 
+    $(document).on("pagecontainerload", function (event, ui) {
+        app.log("pagecontainerload ");
+        $(ui.toPage).trigger("create")
+    })
 
     return app;
 }($, app, document));
