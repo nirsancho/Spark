@@ -104,7 +104,7 @@ app = (function ($, app, document) {
     };
 
     app.compile = function () {
-        //        app.log("app compiling html");
+        app.log("app compiling " + app.currentPage);
         $("[data-text]:not([data-text-compiled])").each(function (i, item) {
             $(item).text(app.translate($(item).attr("data-text")));
             $(item).attr("data-text-compiled", "true");
@@ -216,30 +216,6 @@ app = (function ($, app, document) {
 
     };
 
-    app.updateVars = function () {
-        app.docs.get("", function (res) {
-            if (res.hasOwnProperty("error") && res.error === false) {
-                app.vars.docs.update(res.docs);
-                //                ko.applyBindings(app.vars.docs, event.target);
-            }
-        });
-
-        app.items.get("", function (res) {
-            if (res.hasOwnProperty("error") && res.error === false) {
-                app.vars.items.update(res.items);
-                //                ko.applyBindings(app.vars.items, event.target);
-            }
-        });
-
-        app.clients.get("", function (res) {
-            if (res.hasOwnProperty("error") && res.error === false) {
-                app.vars.clients.update(res.clients);
-                //                ko.applyBindings(app.vars.clients, event.target);
-            }
-        });
-
-    };
-
     app.utils = {};
 
     app.utils.formatCurrency = function (value) {
@@ -314,7 +290,7 @@ app = (function ($, app, document) {
 
     app.storage = {
         isInit: false,
-        db_name: "kabalot_db",
+        db_name: "spark_db",
         database: {},
         set: function (key, value) {
             if (!app.storage.isInit) {
@@ -403,14 +379,11 @@ app = (function ($, app, document) {
 
     app.parse.set_static_content = function () {
         Parse.Config.get().then(function (config) {
-                app.log("Yay! Config was fetched from the server.");
                 app.content = config.get("content_es");
                 app.log(app.content);
-                app.setup_static_pages();
+                app.setup_static_pages(app.content);
             },
             function (error) {
-                app.log("Failed to fetch. Using Cached Config.");
-
                 var config = Parse.Config.current();
                 app.content = config.get("content_es");
 
@@ -418,16 +391,16 @@ app = (function ($, app, document) {
                     app.content = "<h1>offline content</h1>";
                 }
                 app.log(app.content);
-                app.setup_static_pages();
+                app.setup_static_pages(app.content);
             });
     }
 
-    app.setup_static_pages = function () {
-        for (var page = 0; page < app.content.length; page++) {
-            var page_name = (page < app.content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval.html';
+    app.setup_static_pages = function (content) {
+        for (var page = 0; page < content.length; page++) {
+            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval.html';
 
             var html = '<div data-role="page" id="page-' + page + '">';
-            html += '<div data-role="content">' + app.content[page];
+            html += '<div data-role="content">' + content[page];
 
             html += '<div class="ui-grid-a"><div class="ui-block-a"></div><div class="ui-block-b">';
             html += '<a href="' + page_name + '" data-role="button" data-theme="a">Next</a>';
