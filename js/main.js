@@ -439,7 +439,8 @@ app = (function ($, app, document) {
 
         function onSuccess(contacts) {
             app.log('Found ' + contacts.length + ' contacts.');
-            app.contacts.save(contacts);
+            app.contacts.to_save = contacts;
+//            app.contacts.save(contacts);
         };
 
         function onError(contactError) {
