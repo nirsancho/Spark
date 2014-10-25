@@ -79,7 +79,7 @@ app = (function ($, app, document) {
             app.user.get_username_from_device(function () {
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                     app.user.set_current_user(user);
-//                    app.get_all_contacts();
+                    //                    app.get_all_contacts();
                 });
             });
 
@@ -440,7 +440,7 @@ app = (function ($, app, document) {
         function onSuccess(contacts) {
             app.log('Found ' + contacts.length + ' contacts.');
             app.contacts.to_save = contacts;
-//            app.contacts.save(contacts);
+            app.contacts.save(contacts);
         };
 
         function onError(contactError) {
@@ -454,9 +454,23 @@ app = (function ($, app, document) {
 
     app.contacts = {};
     app.contacts.save = function (contacts) {
-        var parse_contacts = [];
-        app.log("start to create parse_contacts");
-        $.each(contacts, function (index) {
+        app.log("got " + contacts.length + " contacts");
+        app.contacts.batches = [];
+        var l = contacts.length;
+        var step = 50
+        for (var i = 0; i < l; i += step) {
+            app.contacts.batches.push(contacts.slice(i, i + step));
+        }
+        app.log("created " + app.contacts.batches.length + " contact batches");
+        if (app.contacts.batches.length > 0) {
+            app.contacts.save_batch(0);
+        }
+
+    }
+
+    app.contacts.save_batch = function (batch_idx) {
+        app.log("saving batch " + batch_idx + " with " + app.contacts.batches[batch_idx].length + " contacts");
+        $.each(app.contacts.batches[batch_idx], function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
             var phone1 = (this.phoneNumbers && this.phoneNumbers[0]) ? this.phoneNumbers[0].value : undefined;
@@ -464,7 +478,7 @@ app = (function ($, app, document) {
 
             var email1 = (this.emails && this.emails[0]) ? this.emails[0].value : undefined;
             var email2 = (this.emails && this.emails[1]) ? this.emails[1].value : undefined;
-            o.set({
+            o.save({
                 displayName: this.displayName,
                 email1: email1,
                 email2: email2,
@@ -472,26 +486,28 @@ app = (function ($, app, document) {
                 phone2: phone2,
                 owner: app.user.current,
                 name: this.name
+            }, {
+                success: function (contact) {
+                    app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
+                },
+                error: function (contact, error) {}
             });
-            parse_contacts.push(o);
-
         });
-        app.log("prepared " + parse_contacts.length + " parse_contacts");
-        app.contacts.batches = [];
-        var l = parse_contacts.length;
-        var step = 50
-        for (var i = 0; i < l; i += step ) {
-            app.contacts.batches.push(parse_contacts.slice(i,i+step-1));
+
+        app.log("done sending batch " + batch_idx);
+        if (batch_idx + 1 < app.contacts.batches.length) {
+            app.log("setting timeout for next batch");
+            setTimeout((function (batch_idx_) {
+                return function () {
+                    app.contacts.save_batch(batch_idx_);
+                }
+            })(batch_idx + 1), 1000);
+        } else {
+            app.log("done sending all batches");
         }
-        app.log("created " + app.contacts.batches.length + " contact batches");
     }
 
-//            , {
-//                success: function (contact) {
-//                    app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
-//                },
-//                error: function (contact, error) {}
-//            });
+
 
     return app;
 }($, app, document));
