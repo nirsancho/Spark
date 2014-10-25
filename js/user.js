@@ -1,4 +1,4 @@
-var app = (function ($, app, document) {
+app = (function ($, app, document) {
     app = app || {};
     app.user = app.user || {};
 
