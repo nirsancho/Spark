@@ -6,6 +6,7 @@ function install_debug(debug_url) {
 
 app = (function ($, app, document) {
     app = app || {};
+    app.load_timestamp = new Date().getTime();
     app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.13:8080/"
     app.lang = "es";
@@ -97,7 +98,7 @@ app = (function ($, app, document) {
     app.logbook = [];
     app.log = function (str) {
         if (typeof str == "string") {
-            str = parseInt(new Date().getTime() / 1000) + ": " + str;
+            str = parseInt((new Date().getTime()-app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
         // app.logbook.push(str);
@@ -397,7 +398,7 @@ app = (function ($, app, document) {
 
     app.setup_static_pages = function (content) {
         for (var page = 0; page < content.length; page++) {
-            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval.html';
+            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#app-approval';
 
             var html = '<div data-role="page" id="page-' + page + '">';
             html += '<div data-role="content">' + content[page];
