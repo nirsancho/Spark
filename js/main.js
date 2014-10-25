@@ -411,15 +411,9 @@ app = (function ($, app, document) {
         }
 
         //        $.mobile.initializePage();
-        $(document).on("mobileinit", function () {
-                $.mobile.changePage("#page-0");
-            }
-        }
+         $.mobile.changePage("#page-0");
+
     }
-
-
-
-
 
 
     return app;
