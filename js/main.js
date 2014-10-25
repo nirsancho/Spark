@@ -13,7 +13,6 @@ app = (function ($, app, document) {
     app.vars = {};
     app.isPhonegap = (function () {
         return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
-        //        return navigator === undefined ? false : navigator.hasOwnProperty("notification");
     })();
 
     if (app.isPhonegap) {
@@ -73,9 +72,7 @@ app = (function ($, app, document) {
 
             app.parse.setup();
 
-            if (app.isPhonegap) {
-                navigator.notification.beep(1);
-            }
+            navigator.notification.beep(1);
 
             app.user.get_username_from_device(function () {
                 app.user.login_or_signup(app.deviceInfo, function (user) {
@@ -98,7 +95,7 @@ app = (function ($, app, document) {
     app.logbook = [];
     app.log = function (str) {
         if (typeof str == "string") {
-            str = parseInt((new Date().getTime()-app.load_timestamp) / 1000) + ": " + str;
+            str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
         // app.logbook.push(str);
@@ -398,7 +395,7 @@ app = (function ($, app, document) {
 
     app.setup_static_pages = function (content) {
         for (var page = 0; page < content.length; page++) {
-            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#app-approval';
+            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : 'app-approval.html';
 
             var html = '<div data-role="page" id="page-' + page + '">';
             html += '<div data-role="content">' + content[page];
@@ -415,7 +412,7 @@ app = (function ($, app, document) {
         }
 
         $.mobile.initializePage();
-        $.mobile.changePage("#app-approval");
+        $.mobile.changePage("#page-0");
     }
 
 
