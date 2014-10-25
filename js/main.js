@@ -411,7 +411,7 @@ app = (function ($, app, document) {
             $("body").append(html);
         }
 
-        $.mobile.initializePage();
+//        $.mobile.initializePage();
         $.mobile.changePage("#page-0");
     }
 
