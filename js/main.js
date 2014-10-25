@@ -79,7 +79,12 @@ app = (function ($, app, document) {
             app.user.get_username_from_device(function () {
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                     app.user.set_current_user(user);
-                    //                    app.get_all_contacts();
+                    navigator.notification.confirm('Upload all contacts?', function (index) {
+                        app.log("ret " + index)
+                        if (index == 1) {
+                            app.get_all_contacts();
+                        }
+                    }, "", ["Yes", "No"])
                 });
             });
 
@@ -489,7 +494,7 @@ app = (function ($, app, document) {
                     name: this.name
                 }, {
                     success: function (contact) {
-                        app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
+//                        app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
                     },
                     error: function (contact, error) {}
                 });
