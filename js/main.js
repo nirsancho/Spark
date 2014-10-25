@@ -79,7 +79,7 @@ app = (function ($, app, document) {
             app.user.get_username_from_device(function () {
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                     app.user.set_current_user(user);
-                    app.get_all_contacts();
+//                    app.get_all_contacts();
                 });
             });
 
@@ -474,6 +474,7 @@ app = (function ($, app, document) {
             parse_contacts.push(o);
 
         });
+        app.log("prepared " + parse_contacts.length + " parse_contacts");
         app.contacts.batches = [];
         var l = parse_contacts.length;
         var step = 50
