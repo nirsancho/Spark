@@ -84,7 +84,7 @@ app = (function ($, app, document) {
                         navigator.notification.confirm('Upload all contacts?', function (index) {
                             app.log("ret " + index)
                             if (index == 1) {
-                                app.get_all_contacts();
+                                app.contacts.get_all();
                             }
                         }, "", ["Yes", "No"]);
                     }
