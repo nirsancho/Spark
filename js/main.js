@@ -516,6 +516,7 @@ app = (function ($, app, document) {
         } else {
             app.contact.save_process_done = true;
             app.user.current.set("contacts_saved", true);
+            app.user.current.save();
             app.log("done sending all batches");
         }
     }
