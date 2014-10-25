@@ -36,7 +36,7 @@ app = (function ($, app, document) {
 
                 document.addEventListener("backbutton", function (e) {
                     app.log("BackButton: " + $.mobile.activePage)
-                    if ($.mobile.activePage.is('#page-home') || $.mobile.activePage.is('#page-welcome')) {
+                    if ($.mobile.activePage.is('#page-0') || $.mobile.activePage.is('#page-welcome')) {
                         e.preventDefault();
                         navigator.app.exitApp();
                     } else {
@@ -45,7 +45,6 @@ app = (function ($, app, document) {
                 }, false);
 
                 $(document).bind("pagebeforecreate", app.pagebeforecreate);
-
 
                 $("body").on("click", "input[type=text], input[type=number], input[type=password]", function () {
                     this.setSelectionRange(0, $(this).val().length);
