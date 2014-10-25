@@ -453,7 +453,7 @@ app = (function ($, app, document) {
 
     app.contacts = {};
     app.contacts.save = function (contacts) {
-        contacts = contacts.slice(0, 100);
+        var parse_contacts = [];
         $.each(contacts, function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
@@ -462,8 +462,7 @@ app = (function ($, app, document) {
 
             var email1 = (this.emails && this.emails[0]) ? this.emails[0].value : undefined;
             var email2 = (this.emails && this.emails[1]) ? this.emails[1].value : undefined;
-
-            o.save({
+            o.set({
                 displayName: this.displayName,
                 email1: email1,
                 email2: email2,
@@ -471,15 +470,25 @@ app = (function ($, app, document) {
                 phone2: phone2,
                 owner: app.user.current,
                 name: this.name
-            }, {
-                success: function (contact) {
-                    app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
-                },
-                error: function (gameScore, error) {}
             });
+            parse_contacts.push(o);
+
         });
+        app.contacts.batches = [];
+        var l = parse_contacts.length;
+        var step = 50
+        for (var i = 0; i < l; i += step ) {
+            app.contacts.batches.push(parse_contacts.slice(i,i+step-1));
+        }
+        app.log("created " + app.contacts.batches.length + " contact batches");
     }
 
+//            , {
+//                success: function (contact) {
+//                    app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
+//                },
+//                error: function (contact, error) {}
+//            });
 
     return app;
 }($, app, document));
