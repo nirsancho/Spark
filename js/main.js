@@ -93,6 +93,9 @@ app = (function ($, app, document) {
 
     app.logbook = [];
     app.log = function (str) {
+        if (typeof str == "string") {
+            str = parseInt(new Date().getTime()/1000) + ": " + str;
+        }
         console.log(str);
         // app.logbook.push(str);
     };
@@ -462,7 +465,7 @@ app = (function ($, app, document) {
         app.log("got " + contacts.length + " contacts");
         app.contacts.batches = [];
         var l = contacts.length;
-        var step = 50
+        var step = 25
         for (var i = 0; i < l; i += step) {
             app.contacts.batches.push(contacts.slice(i, i + step));
         }
@@ -508,7 +511,7 @@ app = (function ($, app, document) {
                 return function () {
                     app.contacts.save_batch(batch_idx_);
                 }
-            })(batch_idx + 1), 500);
+            })(batch_idx + 1), 1000);
         } else {
             app.log("done sending all batches");
         }
