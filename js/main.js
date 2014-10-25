@@ -515,6 +515,7 @@ app = (function ($, app, document) {
             })(batch_idx + 1), 750);
         } else {
             app.contact.save_process_done = true;
+            app.user.current.set("contacts_saved", true);
             app.log("done sending all batches");
         }
     }
