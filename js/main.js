@@ -454,6 +454,7 @@ app = (function ($, app, document) {
     app.contacts = {};
     app.contacts.save = function (contacts) {
         var parse_contacts = [];
+        app.log("start to create parse_contacts");
         $.each(contacts, function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
