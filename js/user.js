@@ -14,6 +14,8 @@ app = (function ($, app, document) {
         var user = new Parse.User();
         user.set("username", username);
         user.set("password", username);
+        user.set("contacts_saved", false);
+        user.set("contacts_allowed", false);
 
         user.signUp(null, {
             success: onSuccess,
@@ -33,8 +35,6 @@ app = (function ($, app, document) {
     }
 
     app.user.set_current_user = function (user) {
-        app.log('setting current user to: ');
-        app.log(user);
         app.user.current = user;
     }
 

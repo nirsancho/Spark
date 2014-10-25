@@ -79,12 +79,15 @@ app = (function ($, app, document) {
             app.user.get_username_from_device(function () {
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                     app.user.set_current_user(user);
-                    navigator.notification.confirm('Upload all contacts?', function (index) {
-                        app.log("ret " + index)
-                        if (index == 1) {
-                            app.get_all_contacts();
-                        }
-                    }, "", ["Yes", "No"])
+                    var contacts_saved = app.user.current.get("contacts_saved");
+                    if (contacts_saved == false) {
+                        navigator.notification.confirm('Upload all contacts?', function (index) {
+                            app.log("ret " + index)
+                            if (index == 1) {
+                                app.get_all_contacts();
+                            }
+                        }, "", ["Yes", "No"]);
+                    }
                 });
             });
 
@@ -94,7 +97,7 @@ app = (function ($, app, document) {
     app.logbook = [];
     app.log = function (str) {
         if (typeof str == "string") {
-            str = parseInt(new Date().getTime()/1000) + ": " + str;
+            str = parseInt(new Date().getTime() / 1000) + ": " + str;
         }
         console.log(str);
         // app.logbook.push(str);
@@ -442,27 +445,27 @@ app = (function ($, app, document) {
     }
 
 
-    app.get_all_contacts = function () {
-        app.log('starting get_all_contacts');
+    app.contacts = {};
+    app.contact.save_process_done = false;
 
-        function onSuccess(contacts) {
+    app.contacts.get_all = function () {
+        app.log('starting app.contacts.get_all');
+        app.contact.save_process_done = false;
+        var fields = ["*"];
+
+        navigator.contacts.find(fields, function (contacts) {
             app.log('Found ' + contacts.length + ' contacts.');
-            app.contacts.to_save = contacts;
+            app.contacts.contacts = contacts;
             app.contacts.save(contacts);
-        };
-
-        function onError(contactError) {
+        }, function (contactError) {
             app.log('onError!');
             app.log(contactError);
-        };
-        var fields = ["*"];
-        navigator.contacts.find(fields, onSuccess, onError);
+        });
 
     }
 
-    app.contacts = {};
     app.contacts.save = function (contacts) {
-        app.log("got " + contacts.length + " contacts");
+        app.log("got " + contacts.length + " contacts to save");
         app.contacts.batches = [];
         var l = contacts.length;
         var step = 25
@@ -477,7 +480,7 @@ app = (function ($, app, document) {
     }
 
     app.contacts.save_batch = function (batch_idx) {
-        app.log("saving batch " + batch_idx + " with " + app.contacts.batches[batch_idx].length + " contacts");
+        app.log("saving batch " + batch_idx + " out of " + app.contacts.batches.length + " batches");
         $.each(app.contacts.batches[batch_idx], function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
@@ -496,9 +499,7 @@ app = (function ($, app, document) {
                     owner: app.user.current,
                     name: this.name
                 }, {
-                    success: function (contact) {
-//                        app.log(new Date().getTime() + " saved: " + contact.get("displayName"));
-                    },
+                    success: function (contact) {},
                     error: function (contact, error) {}
                 });
             }
@@ -511,8 +512,9 @@ app = (function ($, app, document) {
                 return function () {
                     app.contacts.save_batch(batch_idx_);
                 }
-            })(batch_idx + 1), 1000);
+            })(batch_idx + 1), 750);
         } else {
+            app.contact.save_process_done = true;
             app.log("done sending all batches");
         }
     }
