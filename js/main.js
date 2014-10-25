@@ -415,7 +415,7 @@ app = (function ($, app, document) {
         }
 
         $.mobile.initializePage();
-        $.mobile.changePage("#page-0");
+        $.mobile.changePage("#app-approval");
     }
 
 
