@@ -4,7 +4,7 @@ function install_debug(debug_url) {
     document.getElementsByTagName("body")[0].appendChild(e);
 }
 
-var app = (function ($, app, document) {
+app = (function ($, app, document) {
     app = app || {};
     app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.13:8080/"
