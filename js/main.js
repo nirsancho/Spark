@@ -453,7 +453,7 @@ app = (function ($, app, document) {
 
     app.contacts = {};
     app.contacts.save = function (contacts) {
-//        contacts = contacts.slice(0, 100);
+        contacts = contacts.slice(0, 100);
         $.each(contacts, function (index) {
             var Contact = Parse.Object.extend("Contact");
             var o = new Contact();
