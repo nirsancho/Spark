@@ -29,7 +29,7 @@ app = (function ($, app, document) {
     app.refreshData = true;
     app.manualEnhace = false;
 
-    app.device_ready = function () {
+    app.init = function () {
         $(function () {
             app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
@@ -360,13 +360,6 @@ app = (function ($, app, document) {
         }
 
     };
-
-    document.addEventListener("deviceready", app.device_ready, false);
-
-    // for no phonegap testings
-    if (!app.isPhonegap) {
-        app.device_ready();
-    }
 
     app.parse = {};
     app.parse.setup = function () {

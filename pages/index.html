@@ -74,18 +74,30 @@
             $.mobile.defaultPageTransition = 'none';
             $.mobile.pushStateEnabled = false;
         });
+
+        app = {};
+        app.loader = {
+            basepath: "",
+            scripts: ["../js/lang-he.js", "../js/user.js", "../js/contacts.js", "../js/main.js"],
+            callback: function () {
+                app.init();
+            }
+        };
+
     </script>
 
     <script type="text/javascript" charset="utf-8" src="../js/jquery.mobile.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/jquery.mobile.simpledialog2.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/deviceinformation.js"></script>
 
-    <!--<script type="text/javascript" charset="utf-8" src="js/phonegap_local.js"></script>-->
+    <script type="text/javascript" charset="utf-8" src="../js/loader.js"></script>
 
+    <!--
     <script type="text/javascript" charset="utf-8" src="../js/lang-he.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/user.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/contacts.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/main.js"></script>
+-->
 
 
     <div data-role="page" id="page-loading" style="background: white">
