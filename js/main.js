@@ -401,9 +401,10 @@ app = (function ($, app, document) {
             app.create_page("page-" + page, "Page " + (page + 1.0), content[page], next_page)
         }
 
-        app.create_page("page-approval", "Approval", "content", "http://google.com");
-        $("page-approval").append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
-
+        app.create_page("page-approval", "Approval", "content", "#");
+        $html = $("page-approval");
+        $html.append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
+        $("[data-text=general-next]", $html).click(window.open('http://www.goolge.com', '_system'););
         //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
 
