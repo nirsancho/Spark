@@ -68,7 +68,7 @@
     <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
-            //            $.mobile.autoInitializePage = false;
+            $.mobile.autoInitializePage = false;
             $.mobile.phonegapNavigationEnabled = true;
             $.mobile.buttonMarkup.hoverDelay = 100;
             $.mobile.defaultPageTransition = 'none';
@@ -101,30 +101,9 @@
 
 
     <div data-role="page" id="page-loading" style="background: white">
-        <h2 style="text-align:center">Spark app</h2>
+        <h2 style="text-align:center">Chispa!</h2>
     </div>
 
-    <div data-role="page" id="page-approval">
-        <div data-role="header" data-theme="b">
-            <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
-            <h1 data-text="home-cmd-settings"></h1>
-        </div>
-        <div data-role="content">
-            <div>
-                <input type='email' data-bind='value: accountEmail' data-text-placeholder="settings-account-email" />
-                <input type='password' data-bind='value: accountPassword' data-text-placeholder="settings-account-password" />
-            </div>
-            <div class="ui-grid-a">
-                <div class="ui-block-a">
-                    <a href="#" data-bind="" data-role="button" data-text="signin-forgot-pass"></a>
-                </div>
-                <div class="ui-block-b">
-                    <button data-bind="click: signin" data-text="welcome-signin"></button>
-                </div>
-
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>

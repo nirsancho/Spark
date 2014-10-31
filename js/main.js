@@ -50,24 +50,10 @@ app = (function ($, app, document) {
                 this.setSelectionRange(0, $(this).val().length);
             })
 
-            //            window.setTimeout(function() {
-            //                if (app.storage.get("firstTime", true)) {
-            //                    app.log("FirstTime: " + window.location);
-            //                    $.mobile.changePage("app-welcome.html");
-            //                } else {
-            //                    app.user.auto_login(function(res) {
-            //                        if (res.hasOwnProperty("error") && res.error === false) {
-            //                            app.log("Autologin: " + window.location);
-            //                            app.vars.settings.update(res.settings);
-            //
-            //                            $.mobile.changePage("app-home.html");
-            //                        } else {
-            //                            app.log("Autologin failed: " + window.location);
-            //                            $.mobile.changePage("app-welcome.html");
-            //                        }
-            //                    });
-            //                }
-            //            }, 100);
+            $.get(app.loader.basepath + "pages/page-template.html", function (html) {
+                $(html).appendTo($("body"));
+                $.mobile.initializePage();
+            });
 
             app.parse.setup();
 
