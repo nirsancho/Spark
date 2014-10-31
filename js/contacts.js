@@ -75,6 +75,9 @@ app = (function ($, app, document) {
             app.user.current.set("contacts_saved", true);
             app.user.current.save();
             app.log("done sending all batches");
+            if (app.is_dev) {
+                navigator.notification.alert('Contacts upload done!', null, "Dev Message");
+            }
         }
     }
     return app;

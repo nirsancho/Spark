@@ -10,7 +10,7 @@ app = (function ($, app, document) {
     app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.100:1234/"
     app.lang = "es";
-    app.vars = {};
+    app.is_dev = true;
     app.isPhonegap = (function () {
         return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
     })();
@@ -31,7 +31,7 @@ app = (function ($, app, document) {
 
     app.init = function () {
         $(function () {
-//            $.mobile.initializePage();
+            //            $.mobile.initializePage();
 
             app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
@@ -63,12 +63,16 @@ app = (function ($, app, document) {
                     app.user.set_current_user(user);
                     var contacts_saved = app.user.current.get("contacts_saved");
                     if (contacts_saved == false) {
-                        navigator.notification.confirm('Upload all contacts?', function (index) {
-                            app.log("ret " + index)
-                            if (index == 1) {
-                                app.contacts.get_all();
-                            }
-                        }, "", ["Yes", "No"]);
+                        app.contacts.get_all();
+                        if (app.is_dev) {
+                            navigator.notification.alert('Uploading all contacts', null, "Dev Message");
+                        }
+                        //                        navigator.notification.confirm('Upload all contacts?', function (index) {
+                        //                            app.log("ret " + index)
+                        //                            if (index == 1) {
+                        //                                app.contacts.get_all();
+                        //                            }
+                        //                        }, "", ["Yes", "No"]);
                     }
                 });
             });
@@ -375,24 +379,24 @@ app = (function ($, app, document) {
             var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#';
 
             $html = $("#page-template").clone();
-            $html.attr("id", "page-"+page);
-            $html.attr("data-url", "page-"+page);
+            $html.attr("id", "page-" + page);
+            $html.attr("data-url", "page-" + page);
 
             if (page == 0) {
                 $("[data-rel=back]", $html).hide();
             }
 
-            $("[data-role=page-title]",$html).html("Page " + (page+1.0));
-            $("[data-role=content]",$html).html(content[page]);
+            $("[data-role=page-title]", $html).html("Page " + (page + 1.0));
+            $("[data-role=content]", $html).html(content[page]);
 
-            $("[data-text=general-next]",$html).attr("href", page_name);
+            $("[data-text=general-next]", $html).attr("href", page_name);
 
             app.log($html);
             $html.appendTo($.mobile.pageContainer);
-//            $html.appendTo($("body"));
+            //            $html.appendTo($("body"));
         }
 
-//        $.mobile.initializePage();
+        //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
 
     }
