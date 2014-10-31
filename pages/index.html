@@ -68,7 +68,7 @@
     <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
-            $.mobile.autoInitializePage = false;
+//            $.mobile.autoInitializePage = false;
             $.mobile.phonegapNavigationEnabled = true;
             $.mobile.buttonMarkup.hoverDelay = 100;
             $.mobile.defaultPageTransition = 'none';
@@ -76,13 +76,20 @@
         });
 
         app = {};
-        app.loader = {
-            basepath: "http://unusid.com/spark/js/",
-            scripts: ["lang-he.js", "user.js", "contacts.js", "main.js"],
-            callback: function () {
-                app.init();
-            }
+        app.loader = {};
+        app.loader.is_localhost = (function () {
+            return document.location.hostname == "localhost" || document.location.hostname == "127.0.0.1";
+        })();
+
+        app.loader.basepath = (function () {
+            return (app.loader.is_localhost ? "../js/" : "http://unusid.com/spark/js/");
+        })();
+
+        app.loader.scripts = ["lang-es.js", "user.js", "contacts.js", "main.js"];
+        app.loader.callback = function () {
+            app.init();
         };
+
     </script>
 
     <script type="text/javascript" charset="utf-8" src="../js/jquery.mobile.min.js"></script>
@@ -113,7 +120,7 @@
         </div>
         <div data-role="navbar">
             <ul data-role="navbar-ul">
-
+                <li><a href="#" data-role="nav-next" data-text="general-next"></a><li>
             </ul>
         </div>
     </div>

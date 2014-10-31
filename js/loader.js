@@ -9,6 +9,11 @@ app.loader.fire_init = function () {
 }
 
 app.loader.loadScripts = function (scripts, callback) {
+    if (app.loader.is_localhost) {
+        $.ajaxSetup({
+            cache: true
+        });
+    }
 
     var scripts = scripts || [];
     if (scripts.length == 0) {

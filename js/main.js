@@ -376,23 +376,24 @@ app = (function ($, app, document) {
 
             $html = $("#page-template").clone();
             $html.attr("id", "page-"+page);
+            $html.attr("data-url", "page-"+page);
 
             if (page == 0) {
                 $("[data-rel=back]", $html).hide();
             }
 
-            $("[date-role=title]",$html).html("Page " + (page+1.0));
-            $("[date-role=content]",$html).html(content[page]);
+            $("[data-role=page-title]",$html).html("Page " + (page+1.0));
+            $("[data-role=content]",$html).html(content[page]);
 
-            $("[date-role=navbar-ul]",$html).append($('<li><a href="'+page_name+'">Next</a><li>'));
+            $("[data-role=nav-next]",$html).attr("href", page_name);
 
-
-
+            app.log($html);
             $html.appendTo($.mobile.pageContainer);
+//            $html.appendTo($("body"));
         }
 
-        $.mobile.initializePage();
-        $.mobile.changePage("#page-0");
+//        $.mobile.initializePage();
+        $.mobile.changePage($("#page-0"));
 
     }
 
