@@ -31,6 +31,8 @@ app = (function ($, app, document) {
 
     app.init = function () {
         $(function () {
+            $.mobile.initializePage();
+
             app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
 
