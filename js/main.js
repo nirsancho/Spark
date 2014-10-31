@@ -377,22 +377,22 @@ app = (function ($, app, document) {
             });
     }
 
-    app.create_page = function(id, title, content, next_page) {
-         $html = $("#page-template").clone();
-            $html.attr("id", id);
-            $html.attr("data-url", id);
+    app.create_page = function (id, title, content, next_page) {
+        $html = $("#page-template").clone();
+        $html.attr("id", id);
+        $html.attr("data-url", id);
 
-            if (id == "page-0") {
-                $("[data-rel=back]", $html).hide();
-            }
+        if (id == "page-0") {
+            $("[data-rel=back]", $html).hide();
+        }
 
-            $("[data-role=page-title]", $html).html(title);
-            $("[data-role=content]", $html).html(content);
+        $("[data-role=page-title]", $html).html(title);
+        $("[data-role=content]", $html).html(content);
 
-            $("[data-text=general-next]", $html).attr("href", next_page);
+        $("[data-text=general-next]", $html).attr("href", next_page);
 
-            app.log($html);
-            $html.appendTo($.mobile.pageContainer);
+        app.log($html);
+        $html.appendTo($.mobile.pageContainer);
 
     }
     app.setup_static_pages = function (content) {
@@ -404,7 +404,9 @@ app = (function ($, app, document) {
         app.create_page("page-approval", "Approval", "content", "#");
         $html = $("page-approval");
         $html.append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
-        $("[data-text=general-next]", $html).click(window.open('http://www.goolge.com', '_system'));
+        $("[data-text=general-next]", $html).click(function () {
+            window.open('http://www.goolge.com', '_system')
+        });
         //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
 
