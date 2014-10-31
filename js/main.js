@@ -1,3 +1,6 @@
+console.log("main.js")
+console.log(app)
+
 function install_debug(debug_url) {
     var e = document.createElement("script");
     e.setAttribute("src", debug_url + "/target/target-script.js#anonymous");
@@ -396,13 +399,17 @@ app = (function ($, app, document) {
             //            $html.appendTo($("body"));
         }
 
+        $html = $("#page-template").clone();
+        $html.attr("id", "page-approval");
+        $html.attr("data-url", "page-approval");
+
         //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
 
     }
 
     $(document).on("pagecontainerload", function (event, ui) {
-        app.log("pagecontainerload ");
+        app.log("pagecontainerload");
         $(ui.toPage).trigger("create")
     })
 

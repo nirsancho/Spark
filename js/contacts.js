@@ -1,3 +1,5 @@
+console.log("contacts.js")
+console.log(app)
 app = (function ($, app, document) {
     app = app || {};
     app.contacts = app.contacts || {};
@@ -81,10 +83,25 @@ app = (function ($, app, document) {
         }
     }
 
-    app.contacts.set_approval(is_approved) {
+    app.contacts.set_approval = function(is_approved) {
+        app.user.current.set("contacts_allowed", is_approved);
+        app.user.current.save();
+    }
 
+
+    app.contacts.ask_approval = function() {
+            navigator.notification.confirm(app.text.es["contacts-approval-content"], function (index) {
+                app.log("ret " + index)
+                app.contacts.set_approval(index == 1);
+            }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
+    }
+
+    app.contacts.checkbox_cb = function() {
+        if (app.contacts.checkbox_cb.not_first_time === undefined) {
+            app.contacts.checkbox_cb.not_first_time = true;
+            app.contacts.ask_approval();
+        }
     }
 
     return app;
 }($, app, document));
-

@@ -1,4 +1,9 @@
-var app = (function(app) {
+
+
+console.log("lang-es.js")
+console.log(app)
+
+app = (function (app) {
     app = app || {};
     app.text = app.text || {};
     app.text.es = {
@@ -10,7 +15,11 @@ var app = (function(app) {
         "general-delete": "Borrar",
         "general-add": "Anadir",
         "general-next" : 'Siguiente',
+        "general-continue" : 'Continuar',
         "general-close" : 'Cerrar',
+
+        "contacts-approval-title": "Compartir con Contactos",
+        "contacts-approval-content": "Tus contactos... Compartir?"
     };
 
     return app;

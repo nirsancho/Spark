@@ -1,3 +1,5 @@
+console.log("user.js")
+console.log(app)
 app = (function ($, app, document) {
     app = app || {};
     app.user = app.user || {};
