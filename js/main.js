@@ -56,10 +56,12 @@ app = (function ($, app, document) {
                     $(html).appendTo($("body"));
                     $.mobile.initializePage();
                 },
+                type: 'GET',
                 crossDomain: true,
                 xhrFields: {
                     withCredentials: true
                 },
+                dataType: 'html',
 
             });
 
