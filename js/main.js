@@ -377,31 +377,32 @@ app = (function ($, app, document) {
             });
     }
 
-    app.setup_static_pages = function (content) {
-        for (var page = 0; page < content.length; page++) {
-            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#';
+    app.create_page = function(id, title, content, next_page) {
+         $html = $("#page-template").clone();
+            $html.attr("id", id);
+            $html.attr("data-url", id);
 
-            $html = $("#page-template").clone();
-            $html.attr("id", "page-" + page);
-            $html.attr("data-url", "page-" + page);
-
-            if (page == 0) {
+            if (id == "page-0") {
                 $("[data-rel=back]", $html).hide();
             }
 
-            $("[data-role=page-title]", $html).html("Page " + (page + 1.0));
-            $("[data-role=content]", $html).html(content[page]);
+            $("[data-role=page-title]", $html).html(title);
+            $("[data-role=content]", $html).html(content);
 
-            $("[data-text=general-next]", $html).attr("href", page_name);
+            $("[data-text=general-next]", $html).attr("href", next_page);
 
             app.log($html);
             $html.appendTo($.mobile.pageContainer);
-            //            $html.appendTo($("body"));
+
+    }
+    app.setup_static_pages = function (content) {
+        for (var page = 0; page < content.length; page++) {
+            var next_page = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#page-approval';
+            app.create_page("page-" + page, "Page " + (page + 1.0), content[page], next_page)
         }
 
-        $html = $("#page-template").clone();
-        $html.attr("id", "page-approval");
-        $html.attr("data-url", "page-approval");
+        app.create_page("page-approval", "Approval", "content", "http://google.com");
+        $("page-approval").append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
 
         //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
