@@ -381,10 +381,10 @@ app = (function ($, app, document) {
                 $("[data-rel=back]", $html).hide();
             }
 
-            $("[date-role=title",$html).html("Page " + (page+1.0));
-            $("[date-role=content",$html).html(content[page]);
+            $("[date-role=title]",$html).html("Page " + (page+1.0));
+            $("[date-role=content]",$html).html(content[page]);
 
-            $("[date-role=navbar-ul",$html).append($('<li><a href="'+page_name+'">Next</a><li>'));
+            $("[date-role=navbar-ul]",$html).append($('<li><a href="'+page_name+'">Next</a><li>'));
 
 
 
