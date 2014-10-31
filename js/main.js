@@ -56,9 +56,8 @@ app = (function ($, app, document) {
                     $(html).appendTo($("body"));
                     $.mobile.initializePage();
                 },
-                settings: {
-                    crossDomain: true
-                }
+                crossDomain: true
+
             });
 
             app.parse.setup();
