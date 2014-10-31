@@ -80,6 +80,11 @@ app = (function ($, app, document) {
             }
         }
     }
+
+    app.contacts.set_approval(is_approved) {
+
+    }
+
     return app;
 }($, app, document));
 
