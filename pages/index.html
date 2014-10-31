@@ -68,7 +68,7 @@
     <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
-//            $.mobile.autoInitializePage = false;
+            //            $.mobile.autoInitializePage = false;
             $.mobile.phonegapNavigationEnabled = true;
             $.mobile.buttonMarkup.hoverDelay = 100;
             $.mobile.defaultPageTransition = 'none';
@@ -89,7 +89,6 @@
         app.loader.callback = function () {
             app.init();
         };
-
     </script>
 
     <script type="text/javascript" charset="utf-8" src="../js/jquery.mobile.min.js"></script>
@@ -118,11 +117,25 @@
         <div data-role="content">
 
         </div>
+
+        <div class="ui-grid-a">
+            <div class="ui-block-a"></div>
+            <div class="ui-block-b">
+                <a href="#" data-role="button" data-text="general-next" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right"></a>
+            </div>
+        </div>
+
+        <!--
         <div data-role="navbar">
+
             <ul data-role="navbar-ul">
-                <li><a href="#" data-role="nav-next" data-text="general-next"></a><li>
+                <a href="#"></a>
+                <li>
+                    <a href="#" data-role="nav-next" data-text="general-next" ui-icon-arrow-r ui-btn-icon-right></a>
+                </li>
             </ul>
         </div>
+-->
     </div>
 
 </body>
