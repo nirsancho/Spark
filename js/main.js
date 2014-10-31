@@ -385,7 +385,7 @@ app = (function ($, app, document) {
             $("[data-role=page-title]",$html).html("Page " + (page+1.0));
             $("[data-role=content]",$html).html(content[page]);
 
-            $("[data-role=nav-next]",$html).attr("href", page_name);
+            $("[data-text=general-next]",$html).attr("href", page_name);
 
             app.log($html);
             $html.appendTo($.mobile.pageContainer);
