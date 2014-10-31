@@ -50,20 +50,7 @@ app = (function ($, app, document) {
                 this.setSelectionRange(0, $(this).val().length);
             })
 
-            $.ajax({
-                url: app.loader.basepath + "../pages/page-template.html",
-                success: function (html) {
-                    $(html).appendTo($("body"));
-                    $.mobile.initializePage();
-                },
-                type: 'GET',
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: true
-                },
-                dataType: 'html',
 
-            });
 
             app.parse.setup();
 
