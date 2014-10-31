@@ -31,7 +31,7 @@ app = (function ($, app, document) {
 
     app.init = function () {
         $(function () {
-            $.mobile.initializePage();
+//            $.mobile.initializePage();
 
             app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
@@ -372,23 +372,26 @@ app = (function ($, app, document) {
 
     app.setup_static_pages = function (content) {
         for (var page = 0; page < content.length; page++) {
-            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#page-approval';
+            var page_name = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#';
 
-            var html = '<div data-role="page" id="page-' + page + '">';
-            html += '<div data-role="content">' + content[page];
+            $html = $("#page-template").clone();
+            $html.attr("id", "page-"+page);
 
-            html += '<div class="ui-grid-a"><div class="ui-block-a"></div><div class="ui-block-b">';
-            html += '<a href="' + page_name + '" data-role="button" data-theme="a">Next</a>';
-            html += '</div></div>'; // close grid blocks
+            if (page == 0) {
+                $("[data-rel=back]", $html).hide();
+            }
 
-            html += '</div>'; // close content
+            $("[date-role=title",$html).html("Page " + (page+1.0));
+            $("[date-role=content",$html).html(content[page]);
 
-            html += '</div>'; // close page
+            $("[date-role=navbar-ul",$html).append($('<li><a href="'+page_name+'">Next</a><li>'));
 
-            $(html).appendTo($.mobile.pageContainer);
+
+
+            $html.appendTo($.mobile.pageContainer);
         }
 
-        //        $.mobile.initializePage();
+        $.mobile.initializePage();
         $.mobile.changePage("#page-0");
 
     }
