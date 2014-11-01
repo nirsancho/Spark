@@ -24,16 +24,17 @@
 
     <preference name="disable-cursor" value="true" />
 
-    <icon src="icons/Icon-72.png" gap:role="default" />
+    <icon src="icons/72.png" gap:role="default" />
 
-    <icon src="icons/Icon-72.png" gap:platform="ios" width="72" height="72" />
-    <icon src="icons/Icon-72@2x.png" width="114" height="114" />
+    <icon src="icons/72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons/144.png" width="114" height="114" />
 
-    <icon src="icons/Icon-36.png" gap:platform="android" gap:density="ldpi" />
-    <icon src="icons/Icon-48.png" gap:platform="android" gap:density="mdpi" />
-    <icon src="icons/Icon-72.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="icons/36.png" gap:platform="android" gap:qualifier="ldpi" />
+    <icon src="icons/48.png" gap:platform="android" gap:qualifier="mdpi" />
+    <icon src="icons/72.png" gap:platform="android" gap:qualifier="hdpi" />
+    <icon src="icons/144.png" gap:platform="android" gap:qualifier="xhdpi" />
 
-    <icon src="icons/Icon-72.png" gap:platform="blackberry" />
+    <icon src="icons/72.png" gap:platform="blackberry" />
 
     <gap:plugin name="org.apache.cordova.contacts" version="0.2.13" />
     <gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />
