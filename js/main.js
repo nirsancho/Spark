@@ -402,7 +402,7 @@ app = (function ($, app, document) {
         }
 
         app.create_page("page-approval", "Approval", "content", "#");
-        $html = $("page-approval");
+        $html = $("#page-approval");
         $html.append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
         app.log($("[data-text=general-next]", $html))
         $("[data-text=general-next]", $html).attr("id", "cmd-approval");
