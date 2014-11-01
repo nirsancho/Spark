@@ -93,6 +93,8 @@ app = (function ($, app, document) {
             navigator.notification.confirm(app.text.es["contacts-approval-content"], function (index) {
                 app.log("ret " + index)
                 app.contacts.set_approval(index == 1);
+                app.log("element")
+                app.log($element)
                 $element.val(index == 1 ? "on" : "off");
             }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
     }
