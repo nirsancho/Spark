@@ -408,7 +408,8 @@ app = (function ($, app, document) {
         $("[data-role=question]", $html).show();
         $("label[for=q-yes-no]", $html).attr("data-text", content_static["page-approval"].question)
         $("[data-text=general-next]", $html).attr("id", "cmd-approval");
-        $("[name=q-yes-no]", $html).change(function (e) {
+        $("[name=q-yes-no]", $html).attr("id", "approval-slider")
+        $("#approval-slider", $html).change(function (e) {
             var val = $(e.target).val();
             app.log("slidder changed to: " + val);
             app.contacts.checkbox_cb(val == "on", $(e.target));
