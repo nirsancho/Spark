@@ -96,10 +96,12 @@ app = (function ($, app, document) {
             }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
     }
 
-    app.contacts.checkbox_cb = function() {
+    app.contacts.checkbox_cb = function(is_approved) {
         if (app.contacts.checkbox_cb.not_first_time === undefined) {
             app.contacts.checkbox_cb.not_first_time = true;
             app.contacts.ask_approval();
+        } else {
+            app.contacts.set_approval(is_approved);
         }
     }
 

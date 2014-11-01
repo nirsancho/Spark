@@ -406,8 +406,14 @@ app = (function ($, app, document) {
         app.create_page("page-approval", "Approval", content_static["page-approval"].content, "#");
         $html = $("#page-approval");
         $("[data-role=question]", $html).show();
-        $("label[for=q-yes-no]",$html).attr("data-text", content_static["page-approval"].question)
+        $("label[for=q-yes-no]", $html).attr("data-text", content_static["page-approval"].question)
         $("[data-text=general-next]", $html).attr("id", "cmd-approval");
+        $("[name=q-yes-no]", $html).change(function (e) {
+            var val = $(e.target).val();
+            app.log("slidder changed to: " + val);
+            app.contacts.checkbox_cb(val == "on");
+        });
+
         $("#cmd-approval", $html).on("click", function (e) {
             e.preventDefault();
             app.log("going to external url: " + content_static["page-approval"].url);
