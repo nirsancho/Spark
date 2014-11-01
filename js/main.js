@@ -389,7 +389,12 @@ app = (function ($, app, document) {
         }
 
         $("[data-role=page-title]", $html).html(title);
-        $("[data-role=content]", $html).html(content);
+        try {
+            $("[data-role=content]", $html).prepend(content);
+        } catch (e) {
+            navigator.notification.alert(e.message, null, "content loading error");
+        }
+
         $("[data-role=question]", $html).hide();
         $("[data-text=general-next]", $html).attr("href", next_page);
 
