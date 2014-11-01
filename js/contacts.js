@@ -94,7 +94,7 @@ app = (function ($, app, document) {
                 app.log("ret " + index)
                 app.contacts.set_approval(index == 1);
                 app.log("element")
-                app.log($element)
+                app.log($selector)
                 $($selector).val(index == 1 ? "on" : "off").slider("refresh");
             }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
     }
