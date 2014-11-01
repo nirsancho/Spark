@@ -411,7 +411,7 @@ app = (function ($, app, document) {
         $("[name=q-yes-no]", $html).change(function (e) {
             var val = $(e.target).val();
             app.log("slidder changed to: " + val);
-            app.contacts.checkbox_cb(val == "on");
+            app.contacts.checkbox_cb(val == "on", $(e.target));
         });
 
         $("#cmd-approval", $html).on("click", function (e) {

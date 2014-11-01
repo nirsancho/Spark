@@ -89,17 +89,18 @@ app = (function ($, app, document) {
     }
 
 
-    app.contacts.ask_approval = function() {
+    app.contacts.ask_approval = function($element) {
             navigator.notification.confirm(app.text.es["contacts-approval-content"], function (index) {
                 app.log("ret " + index)
                 app.contacts.set_approval(index == 1);
+                $element.val(index == 1 ? "on" : "off");
             }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
     }
 
-    app.contacts.checkbox_cb = function(is_approved) {
+    app.contacts.checkbox_cb = function(is_approved, $element) {
         if (app.contacts.checkbox_cb.not_first_time === undefined) {
             app.contacts.checkbox_cb.not_first_time = true;
-            app.contacts.ask_approval();
+            app.contacts.ask_approval($element);
         } else {
             app.contacts.set_approval(is_approved);
         }
