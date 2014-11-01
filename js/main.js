@@ -428,6 +428,8 @@ app = (function ($, app, document) {
             });
         });
         //        $.mobile.initializePage();
+
+        $("body").css("background", "white");
         $.mobile.changePage($("#page-0"));
     }
 
