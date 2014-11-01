@@ -28,6 +28,7 @@
             //            $.mobile.autoInitializePage = false;
             $.mobile.phonegapNavigationEnabled = true;
             $.mobile.buttonMarkup.hoverDelay = 100;
+            $.mobile.buttonMarkup.corners = true;
             $.mobile.defaultPageTransition = 'none';
             $.mobile.pushStateEnabled = false;
         });
@@ -62,18 +63,17 @@
 -->
 
 
-    <div data-role="page" id="page-loading" style="background: none;">
-    </div>
+    <div data-role="page" id="page-loading" style="background: none;"></div>
 
     <div data-role="page" id="page-template">
         <div data-role="header" data-theme="b">
-            <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+            <a href="#" data-rel="back" data-icon="back" data-text="general-back" class="ui-mini"></a>
             <h1 data-role="page-title"></h1>
         </div>
         <div data-role="content">
 
 
-            <div class="ui-field-contain" data-role="question">
+            <div class="ui-field-contain" data-role="question" style="border: none">
                 <label for="q-yes-no" data-text=""></label>
                 <select name="q-yes-no" data-role="slider" data-mini="true">
                     <option value="off" data-text="general-no"></option>
@@ -81,14 +81,20 @@
                 </select>
             </div>
 
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a"></div>
+                <div class="ui-block-b">
+                    <a href="#" data-role="button" data-text="general-next" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right"></a>
+                </div>
+            </div>
+
+            <div>
+                <img src="css/card.jpg" style="text-align:center; width: 100%; margin-top:40px" />
+            </div>
+
         </div>
 
-        <div class="ui-grid-a">
-            <div class="ui-block-a"></div>
-            <div class="ui-block-b">
-                <a href="#" data-role="button" data-text="general-next" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right"></a>
-            </div>
-        </div>
 
     </div>
 
