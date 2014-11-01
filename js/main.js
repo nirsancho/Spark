@@ -405,10 +405,12 @@ app = (function ($, app, document) {
         $html = $("page-approval");
         $html.append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
         $("[data-text=general-next]", $html).attr("id", "cmd-approval");
-        $("#cmd-approval", $html).click(function (e) {
+        $("#cmd-approval", $html).on("click", function (e) {
             e.preventDefault();
             app.log("going to external url")
-            navigator.app.loadUrl("http://google.com", {openExternal : true});
+            navigator.app.loadUrl("http://google.com", {
+                openExternal: true
+            });
         });
         //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
