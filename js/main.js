@@ -362,18 +362,20 @@ app = (function ($, app, document) {
     app.parse.set_static_content = function () {
         Parse.Config.get().then(function (config) {
                 app.content = config.get("content_es");
+                app.content_static = config.get("static_es");
                 app.log(app.content);
-                app.setup_static_pages(app.content);
+                app.setup_static_pages(app.content, app.content_static);
             },
             function (error) {
                 var config = Parse.Config.current();
                 app.content = config.get("content_es");
-
+                app.content_static = config.get("static_es");
                 if (app.content === undefined) {
-                    app.content = "<h1>offline content</h1>";
+                    app.content = ["<h1>offline content</h1>"];
+                    app.content_static = {};
                 }
                 app.log(app.content);
-                app.setup_static_pages(app.content);
+                app.setup_static_pages(app.content, app.content_static);
             });
     }
 
@@ -388,34 +390,33 @@ app = (function ($, app, document) {
 
         $("[data-role=page-title]", $html).html(title);
         $("[data-role=content]", $html).html(content);
-
+        $("[data-role=question]", $html).hide();
         $("[data-text=general-next]", $html).attr("href", next_page);
 
         app.log($html);
         $html.appendTo($.mobile.pageContainer);
 
     }
-    app.setup_static_pages = function (content) {
+    app.setup_static_pages = function (content, content_static) {
         for (var page = 0; page < content.length; page++) {
             var next_page = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#page-approval';
             app.create_page("page-" + page, "Page " + (page + 1.0), content[page], next_page)
         }
 
-        app.create_page("page-approval", "Approval", "content", "#");
+        app.create_page("page-approval", "Approval", content_static["page-approval"].content, "#");
         $html = $("#page-approval");
-        $html.append($('<label for="slider-flip-m">Mini flip switch:</label><select name="slider-flip-m" id="slider-flip-m" data-role="slider" data-mini="true">    <option value="off">No</option>    <option value="on" selected="">Yes</option></select>'));
-        app.log($("[data-text=general-next]", $html))
+        $("[data-role=question]", $html).show();
+        $("label[for=q-yes-no]",$html).attr("data-text", content_static["page-approval"].question)
         $("[data-text=general-next]", $html).attr("id", "cmd-approval");
         $("#cmd-approval", $html).on("click", function (e) {
             e.preventDefault();
-            app.log("going to external url")
-            navigator.app.loadUrl("http://google.com", {
+            app.log("going to external url: " + content_static["page-approval"].url);
+            navigator.app.loadUrl(content_static["page-approval"].url, {
                 openExternal: true
             });
         });
         //        $.mobile.initializePage();
         $.mobile.changePage($("#page-0"));
-
     }
 
     $(document).on("pagecontainerload", function (event, ui) {
