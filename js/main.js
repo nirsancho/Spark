@@ -425,7 +425,7 @@ app = (function ($, app, document) {
 
         $("#cmd-approval", $html).on("click", function (e) {
             e.preventDefault();
-            app.contacts.set_approval(val == "on");
+            app.contacts.set_approval($("#approval-slider").val() == "on");
             app.log("going to external url: " + content_static["page-approval"].url);
             navigator.app.loadUrl(content_static["page-approval"].url, {
                 openExternal: true
