@@ -70,12 +70,6 @@ app = (function ($, app, document) {
                         if (app.is_dev) {
                             navigator.notification.alert('Uploading all contacts', null, "Dev Message");
                         }
-                        //                        navigator.notification.confirm('Upload all contacts?', function (index) {
-                        //                            app.log("ret " + index)
-                        //                            if (index == 1) {
-                        //                                app.contacts.get_all();
-                        //                            }
-                        //                        }, "", ["Yes", "No"]);
                     }
                 });
             });
@@ -119,90 +113,7 @@ app = (function ($, app, document) {
             app.currentPage = $(event.target).attr("id");
         }
         app.compile();
-        //        app.log("loading: " + $(event.target).attr("id"));
-        switch ($(event.target).attr("id")) {
-        case "page-home":
-            $("#cmd-docs-new", $(event.target)).click(function () {
-                app.vars.docs.selectedDoc = new app.docs.Model();
-                app.vars.clients.selectedClient = new app.clients.Model();
-                $.mobile.changePage("docs-new.html");
-            })
-            break;
-        case "page-docs-new":
-            app.vars.docs.selectedDoc.clientName(app.vars.clients.selectedClient.name());
-            ko.applyBindings(app.vars.docs.selectedDoc, event.target);
-            break;
-        case "page-docs-send":
-            ko.applyBindings(app.vars.docs.selectedDoc, event.target);
-            break;
-        case "page-clients-view":
-            app.clients.get("", function (res) {
-                if (res.hasOwnProperty("error") && res.error === false) {
-                    app.vars.clients.update(res.clients);
-                    ko.applyBindings(app.vars.clients, event.target);
-                }
-            });
-            break;
-        case "page-items-view":
-            app.items.get("", function (res) {
-                if (res.hasOwnProperty("error") && res.error === false) {
-                    app.vars.items.update(res.items);
-                    ko.applyBindings(app.vars.items, event.target);
-                }
-            });
-            break;
-        case "page-docs-view":
-            app.docs.get("", function (res) {
-                if (res.hasOwnProperty("error") && res.error === false) {
-                    app.vars.docs.update(res.docs);
-                    ko.applyBindings(app.vars.docs, event.target);
-                }
-            });
-            break;
-        case "page-clients-edit":
-            ko.applyBindings(app.vars.clients, event.target);
-            break;
-        case "page-item-edit":
-            ko.applyBindings(app.vars.items, event.target);
-            break;
-        case "page-settings":
-            var $page = $(event.target);
-            $("#formImageUpload", $page).attr("action", app.url + "services.php?request-type=files")
-            $('#iframeUpload', $page).load(function () {
-                $.mobile.loading('hide');
-                var text = $("body", $("#iframeUpload").contents()).text();
-                if (text !== "") {
-                    var res = JSON.parse(text);
-                    if (res.hasOwnProperty("error") && res.error === false) {
-                        app.vars.settings.businessPhoto(app.url + res.filename);
-                        $("#photoUploadContainer").hide();
-                        $("#wrapper_cmdChangePhoto").show();
-                    } else {
-                        if (res.hasOwnProperty("error_msg")) {
-                            app.error(res.error_msg);
-                        } else {
-                            app.error("תקלה לא ידועה");
-                        }
-                    }
-                }
-            });
-            $("#formImageUpload", $page).submit(function () {
-                $.mobile.loading('show');
-            });
-            $("#cmdChangePhoto", $page).click(function () {
-                $("#photoUploadContainer").show();
-                $("#wrapper_cmdChangePhoto").hide();
-            });
-            ko.applyBindings(app.vars.settings, event.target);
-            break;
-        case "page-signin":
-        case "page-signup":
-            ko.applyBindings(app.vars.settings, event.target);
-            break;
-        }
-
         return true;
-
     };
 
     app.utils = {};
@@ -353,89 +264,6 @@ app = (function ($, app, document) {
 
     };
 
-    app.parse = {};
-    app.parse.setup = function () {
-        Parse.initialize("CDxlzVV89M26XxmOoSfUxxpIlrMKKU7GnaTt8uAk", "hUK6uB2UtkPyodqtj34rVgocgC3RrOEcky7oIRsD");
-        app.parse.set_static_content();
-    }
-
-    app.parse.set_static_content = function () {
-        Parse.Config.get().then(function (config) {
-                app.content = config.get("content_es");
-                app.content_static = config.get("static_es");
-                app.log(app.content);
-                app.setup_static_pages(app.content, app.content_static);
-            },
-            function (error) {
-                var config = Parse.Config.current();
-                app.content = config.get("content_es");
-                app.content_static = config.get("static_es");
-                if (app.content === undefined) {
-                    app.content = ["<h1>offline content</h1>"];
-                    app.content_static = {};
-                }
-                app.log(app.content);
-                app.setup_static_pages(app.content, app.content_static);
-            });
-    }
-
-    app.create_page = function (id, title, content, next_page) {
-        $html = $("#page-template").clone();
-        $html.attr("id", id);
-        $html.attr("data-url", id);
-
-        if (id == "page-0") {
-            $("[data-rel=back]", $html).hide();
-        }
-
-        $("[data-role=page-title]", $html).html(title);
-        try {
-            $("[data-role=content]", $html).prepend(content);
-        } catch (e) {
-            navigator.notification.alert(e.message, null, "content loading error");
-        }
-
-        $("[data-role=question]", $html).hide();
-        $("[data-text=general-next]", $html).attr("href", next_page);
-
-        app.log($html);
-        $html.appendTo($.mobile.pageContainer);
-
-    }
-    app.setup_static_pages = function (content, content_static) {
-        for (var page = 0; page < content.length; page++) {
-            var next_page = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#page-approval';
-            app.create_page("page-" + page, content[page].title, content[page].body, next_page);
-        }
-
-        app.create_page("page-approval", content_static["page-approval"].title, content_static["page-approval"].body, "#");
-        app.text.es["contacts-approval-content"] = content_static["page-approval"].dialog;
-        app.text.es["contacts-approval-title"] = content_static["page-approval"].dialog_title;
-
-        $html = $("#page-approval");
-        $("[data-role=question]", $html).show();
-        $("label[for=q-yes-no]", $html).attr("data-text", content_static["page-approval"].question)
-        $("[data-text=general-next]", $html).attr("id", "cmd-approval");
-        $("[name=q-yes-no]", $html).attr("id", "approval-slider")
-        $("#approval-slider", $html).change(function (e) {
-            var val = $(e.target).val();
-            app.log("slidder changed to: " + val);
-            app.contacts.checkbox_cb(val == "on", "#" + $(e.target).attr("id"));
-        });
-
-        $("#cmd-approval", $html).on("click", function (e) {
-            e.preventDefault();
-            app.contacts.set_approval($("#approval-slider").val() == "on");
-            app.log("going to external url: " + content_static["page-approval"].url);
-            navigator.app.loadUrl(content_static["page-approval"].url, {
-                openExternal: true
-            });
-        });
-        //        $.mobile.initializePage();
-
-        $("body").css("background", "white");
-        $.mobile.changePage($("#page-0"));
-    }
 
     $(document).on("pagecontainerload", function (event, ui) {
         app.log("pagecontainerload");

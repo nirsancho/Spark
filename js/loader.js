@@ -2,6 +2,7 @@ app = app || {};
 app.loader.is_phonegap = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
 app.loader.scripts_loaded = false;
 app.loader.device_ready = !app.loader.is_phonegap;
+app.loader.loaded_scripts = 0;
 app.loader.fire_init = function () {
     if (scripts_loaded && device_ready) {
         callback();
@@ -21,15 +22,18 @@ app.loader.loadScripts = function (scripts, callback) {
         app.loader.callback();
     }
     for (var i = 0; i < scripts.length; i++) {
-        (function (i) {
-            $.getScript(app.loader.basepath + scripts[i], function () {
-
-                if (i + 1 == scripts.length) {
+        var done_cb = (function (script_name) {
+            return (function (script, status) {
+                app.loader.loaded_scripts++;
+                console.log("done running " + script_name + " loaded_scripts: " + app.loader.loaded_scripts);
+                if (app.loader.loaded_scripts  == scripts.length) {
                     app.loader.scripts_loaded = true;
                     app.loader.callback();
                 }
-            });
-        })(i);
+            })
+        })(scripts[i]);
+        console.log("loading " + scripts[i]);
+        $.getScript(app.loader.basepath + scripts[i]).done(done_cb);
     }
 };
 
@@ -39,5 +43,6 @@ if (app.loader.is_phonegap) {
         app.loader.fire_init();
     }, false);
 }
-
-app.loader.loadScripts(app.loader.scripts);
+$(function () {
+    app.loader.loadScripts(app.loader.scripts);
+});

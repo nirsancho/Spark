@@ -43,7 +43,7 @@
             return (app.loader.is_localhost ? "js/" : "http://unusid.com/spark/js/");
         })();
 
-        app.loader.scripts = ["lang-es.js", "user.js", "contacts.js", "main.js"];
+        app.loader.scripts = ["lang-es.js", "content.js", "user.js", "contacts.js", "parse.js", "main.js"];
         app.loader.callback = function () {
             app.init();
         };
