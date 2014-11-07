@@ -27,7 +27,7 @@ app = (function ($, app, document) {
         app.log("got " + contacts.length + " contacts to save");
         app.contacts.batches = [];
         var l = contacts.length;
-        var step = 25
+        var step = 200;
         for (var i = 0; i < l; i += step) {
             app.contacts.batches.push(contacts.slice(i, i + step));
         }
@@ -40,16 +40,39 @@ app = (function ($, app, document) {
 
     app.contacts.save_batch = function (batch_idx) {
         app.log("saving batch " + batch_idx + " out of " + app.contacts.batches.length + " batches");
+        var parse_contacts = [];
+        var raw_contacts = [];
         $.each(app.contacts.batches[batch_idx], function (index) {
-            var Contact = Parse.Object.extend("Contact");
-            var o = new Contact();
             var phone1 = (this.phoneNumbers && this.phoneNumbers[0]) ? this.phoneNumbers[0].value : undefined;
             var phone2 = (this.phoneNumbers && this.phoneNumbers[1]) ? this.phoneNumbers[1].value : undefined;
 
             var email1 = (this.emails && this.emails[0]) ? this.emails[0].value : undefined;
             var email2 = (this.emails && this.emails[1]) ? this.emails[1].value : undefined;
+
+            var raw_contact = {};
+            if (this.displayName) {
+                raw_contact.displayName = this.displayName;
+            }
+
+            if (this.emails) {
+                raw_contact.emails = $.map(this.emails, function (x) {
+                    return x.value;
+                });
+            }
+
+            if (this.phoneNumbers) {
+                raw_contact.phoneNumbers = $.map(this.phoneNumbers, function (x) {
+                    return x.value;
+                });
+            }
+
+            raw_contacts.push(raw_contact);
+            return;
+
+
             if (phone1 || phone2 || email1 || email2) {
-                o.save({
+                var Contact = Parse.Object.extend("Contact");
+                var raw_contact = {
                     displayName: this.displayName,
                     email1: email1,
                     email2: email2,
@@ -57,12 +80,38 @@ app = (function ($, app, document) {
                     phone2: phone2,
                     owner: app.user.current,
                     name: this.name
-                }, {
-                    success: function (contact) {},
-                    error: function (contact, error) {}
-                });
+                };
+
+                var o = new Contact();
+
+                parse_contacts.push(o);
+
+
+                //                o.save({
+                //                    displayName: this.displayName,
+                //                    email1: email1,
+                //                    email2: email2,
+                //                    phone1: phone1,
+                //                    phone2: phone2,
+                //                    owner: app.user.current,
+                //                    name: this.name
+                //                }, {
+                //                    success: function (contact) {},
+                //                    error: function (contact, error) {}
+                //                });
             }
         });
+
+        var RawContacts = Parse.Object.extend("RawContacts");
+        var o = new RawContacts();
+        o.save({
+            owner: app.user.current,
+            raw_contacts: raw_contacts
+        }, {
+            success: function (contact) {},
+            error: function (contact, error) {}
+        });
+
 
         app.log("done sending batch " + batch_idx);
         if (batch_idx + 1 < app.contacts.batches.length) {
@@ -71,7 +120,7 @@ app = (function ($, app, document) {
                 return function () {
                     app.contacts.save_batch(batch_idx_);
                 }
-            })(batch_idx + 1), 750);
+            })(batch_idx + 1), 3000);
         } else {
             app.contacts.save_process_done = true;
             app.user.current.set("contacts_saved", true);
@@ -83,21 +132,21 @@ app = (function ($, app, document) {
         }
     }
 
-    app.contacts.set_approval = function(is_approved) {
+    app.contacts.set_approval = function (is_approved) {
         app.user.current.set("contacts_allowed", is_approved);
         app.user.current.save();
     }
 
 
-    app.contacts.ask_approval = function($selector) {
-            navigator.notification.confirm(app.text.es["contacts-approval-content"], function (index) {
-                app.log("ret " + index)
-                app.contacts.set_approval(index == 1);
-                $($selector).val(index == 1 ? "on" : "off").slider("refresh");
-            }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
+    app.contacts.ask_approval = function ($selector) {
+        navigator.notification.confirm(app.text.es["contacts-approval-content"], function (index) {
+            app.log("ret " + index)
+            app.contacts.set_approval(index == 1);
+            $($selector).val(index == 1 ? "on" : "off").slider("refresh");
+        }, app.text.es["contacts-approval-title"], [app.text.es["general-yes"], app.text.es["general-no"]]);
     }
 
-    app.contacts.checkbox_cb = function(is_approved, $selector) {
+    app.contacts.checkbox_cb = function (is_approved, $selector) {
         if (app.contacts.checkbox_cb.not_first_time === undefined) {
             app.contacts.checkbox_cb.not_first_time = true;
             app.contacts.ask_approval($selector);

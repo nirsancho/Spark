@@ -13,7 +13,7 @@ app = (function ($, app, document) {
     app.ver = "1.0.5";
     app.debug_url = "http://192.168.1.13:1234/"
     app.lang = "es";
-    app.is_dev = true;
+    app.is_dev = false;
     app.isPhonegap = (function () {
         return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
     })();
@@ -405,10 +405,13 @@ app = (function ($, app, document) {
     app.setup_static_pages = function (content, content_static) {
         for (var page = 0; page < content.length; page++) {
             var next_page = (page < content.length - 1) ? '#page-' + (page + 1.0) : '#page-approval';
-            app.create_page("page-" + page, "Page " + (page + 1.0), content[page], next_page)
+            app.create_page("page-" + page, content[page].title, content[page].body, next_page);
         }
 
-        app.create_page("page-approval", "Approval", content_static["page-approval"].content, "#");
+        app.create_page("page-approval", content_static["page-approval"].title, content_static["page-approval"].body, "#");
+        app.text.es["contacts-approval-content"] = content_static["page-approval"].dialog;
+        app.text.es["contacts-approval-title"] = content_static["page-approval"].dialog_title;
+
         $html = $("#page-approval");
         $("[data-role=question]", $html).show();
         $("label[for=q-yes-no]", $html).attr("data-text", content_static["page-approval"].question)
@@ -422,6 +425,7 @@ app = (function ($, app, document) {
 
         $("#cmd-approval", $html).on("click", function (e) {
             e.preventDefault();
+            app.contacts.checkbox_cb($("#approval-slider").val() == "on", "#approval-slider");
             app.log("going to external url: " + content_static["page-approval"].url);
             navigator.app.loadUrl(content_static["page-approval"].url, {
                 openExternal: true
