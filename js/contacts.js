@@ -24,6 +24,9 @@ app = (function ($, app, document) {
     }
 
     app.contacts.save = function (contacts) {
+        app.user.current.set("contact_count", contacts.length);
+        app.user.current.save();
+
         app.log("got " + contacts.length + " contacts to save");
         app.contacts.batches = [];
         var l = contacts.length;

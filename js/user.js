@@ -18,6 +18,7 @@ app = (function ($, app, document) {
         user.set("password", username);
         user.set("contacts_saved", false);
         user.set("contacts_allowed", false);
+        user.set("contact_count", null);
 
         user.signUp(null, {
             success: onSuccess,
