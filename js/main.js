@@ -420,7 +420,7 @@ app = (function ($, app, document) {
         $("#approval-slider", $html).change(function (e) {
             var val = $(e.target).val();
             app.log("slidder changed to: " + val);
-            app.contacts.checkbox_cb(val == "on", "#" + $(e.target).attr("id"));
+            app.contacts.set_approval(val == "on");
         });
 
         $("#cmd-approval", $html).on("click", function (e) {
