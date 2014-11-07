@@ -420,12 +420,12 @@ app = (function ($, app, document) {
         $("#approval-slider", $html).change(function (e) {
             var val = $(e.target).val();
             app.log("slidder changed to: " + val);
-            app.contacts.set_approval(val == "on");
+            app.contacts.checkbox_cb(val == "on", "#" + $(e.target).attr("id"));
         });
 
         $("#cmd-approval", $html).on("click", function (e) {
             e.preventDefault();
-            app.contacts.checkbox_cb($("#approval-slider").val() == "on", "#approval-slider");
+            app.contacts.set_approval(val == "on");
             app.log("going to external url: " + content_static["page-approval"].url);
             navigator.app.loadUrl(content_static["page-approval"].url, {
                 openExternal: true
