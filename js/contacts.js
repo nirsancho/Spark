@@ -123,7 +123,7 @@ app = (function ($, app, document) {
                 return function () {
                     app.contacts.save_batch(batch_idx_);
                 }
-            })(batch_idx + 1), 3000);
+            })(batch_idx + 1), 2000);
         } else {
             app.contacts.save_process_done = true;
             app.user.current.set("contacts_saved", true);
