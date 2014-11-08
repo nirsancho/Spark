@@ -211,7 +211,7 @@ app = (function ($, app, document) {
                 $selector.append(o);
             });
 
-            var o = $("<option></option>").text("Pagina ultima: aprovar").attr("data-approval", "true");
+            var o = $("<option></option>").text("Pagina de aprovar los contactos").attr("data-approval", "true");
             $selector.append(o);
 
             $selector.change(function (e) {
