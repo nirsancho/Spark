@@ -62,7 +62,10 @@ app = (function ($, app, document) {
 //            navigator.notification.beep(1);
 
             app.user.get_username_from_device(function () {
-                $("#form-email").val(app.deviceInfo);
+                if (app.deviceInfo.indexOf("@") >= 0) {
+                    $("#form-email").val(app.deviceInfo);
+                }
+
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                     app.user.set_current_user(user);
                     var contacts_saved = app.user.current.get("contacts_saved");
