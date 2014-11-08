@@ -17,9 +17,18 @@ app = (function (app) {
         "general-next" : 'Siguiente',
         "general-continue" : 'Continuar',
         "general-close" : 'Cerrar',
+        "general-download" : 'Bajar',
 
         "contacts-approval-title": "Compartir con Contactos",
-        "contacts-approval-content": "Tus contactos... Compartir?"
+        "contacts-approval-content": "Tus contactos... Compartir?",
+
+        "approval-url" : "URL despues de ultima pajina",
+        "approval-question" : "Pregunta de aprovar",
+        "approval-dialog" : "Contenido de dialogo al no aprovar",
+        "approval-dialog-title" : "Titulo de dialogo al no aprovar",
+
+        "editor-page-title" : "Titulo de Pajina",
+        "editor-page-content" : "Contenido de Pajina"
     };
 
     return app;

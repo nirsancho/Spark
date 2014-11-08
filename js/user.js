@@ -21,7 +21,15 @@ app = (function ($, app, document) {
         user.set("contact_count", null);
 
         user.signUp(null, {
-            success: onSuccess,
+            success: function (user) {
+                var UserData = Parse.Object.extend("UserData");
+                var o = new UserData();
+                o.save({
+                    user: user,
+                    status: "nuevo"
+                });
+                onSuccess(user);
+            },
             error: function (user, error) {
                 // Show the error message somewhere and let the user try again.
                 app.log("Error: " + error.code + " " + error.message);

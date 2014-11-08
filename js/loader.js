@@ -32,8 +32,10 @@ app.loader.loadScripts = function (scripts, callback) {
                 }
             })
         })(scripts[i]);
+
+
         console.log("loading " + scripts[i]);
-        $.getScript(app.loader.basepath + scripts[i]).done(done_cb);
+        $.getScript(app.loader.basepath + scripts[i]).done(done_cb).fail(function(e){console.log(e)});
     }
 };
 
