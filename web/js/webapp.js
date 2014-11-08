@@ -72,7 +72,7 @@ app = (function ($, app, document) {
 
                     return [[r1.id, r1.get("username"), r1.get("contacts_allowed"),
                          r1.get("contacts_saved"), r1.get("contact_count"),
-                         status, download + save + cancel]];
+                         status, moment(r1.createdAt).format("DD/MM/YY"), download + save + cancel]];
                 });
 
 
@@ -97,6 +97,9 @@ app = (function ($, app, document) {
                     },
                         {
                             "title": "Status",
+                    },
+                        {
+                            "title": "Creado En",
                     },
                         {
                             "title": "Acciones",
@@ -192,7 +195,7 @@ app = (function ($, app, document) {
                 iconsPath: "js/nicEditorIcons.gif",
             }).panelInstance('page-content');
             app.editor = nicEditors.findEditor('page-content');
-            $(".nicEdit-panelContain").parent().css("width","100%").next().css("width","100%").children().first().css("width","100%");
+            $(".nicEdit-panelContain").parent().css("width", "100%").next().css("width", "100%").children().first().css("width", "100%");
 
             var $selector = $("#pages");
             $.each(pages, function (index, page) {
