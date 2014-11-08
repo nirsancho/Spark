@@ -11,7 +11,7 @@ function get_from_array(arr, index, def_val) {
 
 app = (function ($, app, document) {
     app = app || {};
-    app.user.get_contacts = function (useridx, cb) {
+    app.user.get_contacts = function (useridx, phonesOnly, cb) {
         $.mobile.loading("show", {
             text: "Bajando",
             textVisible: true,
@@ -37,6 +37,12 @@ app = (function ($, app, document) {
 
                     return contact;
                 });
+
+                if (phonesOnly) {
+                    tabContacts = $.grep(tabContacts, function (item, i) {
+                        return (item.phone1 != "" || item.phone2 != "");
+                    });
+                }
 
                 var filename = app.user.list[useridx].get("username");
                 filename = filename || app.user.list[useridx].id;
@@ -69,16 +75,17 @@ app = (function ($, app, document) {
                     var download = "<button class='user-download' data-index='" + index + "' data-text='general-download'></button>";
                     var save = "<button class='user-save' data-index='" + index + "' data-text='general-save'></button>";
                     var cancel = "<button class='user-cancel' data-index='" + index + "' data-text='general-cancel'></button>";
-
+                    var createdAt = "<span title='"+moment(r1.createdAt).format("HH:mm DD/MM/YY")+"'>"+moment(r1.createdAt).format("DD/MM/YY")+"</span>"
                     return [[r1.id, r1.get("username"), r1.get("contacts_allowed"),
                          r1.get("contacts_saved"), r1.get("contact_count"),
-                         status, moment(r1.createdAt).format("DD/MM/YY"), download + save + cancel]];
+                         status, createdAt, download + save + cancel]];
                 });
 
 
 
                 app.usertable = $('#users').dataTable({
                     "data": rr,
+                    "autoWidth": false,
                     "columns": [
                         {
                             "title": "Id"
@@ -124,7 +131,8 @@ app = (function ($, app, document) {
                 $('#users tbody .user-download').click(function () {
                     var idx = $(this).attr("data-index");
                     if (idx) {
-                        app.user.get_contacts(idx);
+                        var phonesOnly = $("#cb_phonesOnly").prop("checked");
+                        app.user.get_contacts(idx, phonesOnly);
                     }
                 });
 

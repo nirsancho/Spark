@@ -32,6 +32,7 @@ app = (function (app) {
 
         "webapp-contactos":"Ver Contactos",
         "webapp-editor":"Ver Editor",
+        "webapp-contactos-phonesonly":"Solo Bajar Contactos con Telefono",
 
     };
 
