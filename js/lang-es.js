@@ -28,7 +28,11 @@ app = (function (app) {
         "approval-dialog-title" : "Titulo de dialogo al no aprovar",
 
         "editor-page-title" : "Titulo de Pajina",
-        "editor-page-content" : "Contenido de Pajina"
+        "editor-page-content" : "Contenido de Pajina",
+
+        "webapp-contactos":"Ver Contactos",
+        "webapp-editor":"Ver Editor",
+
     };
 
     return app;

@@ -192,6 +192,7 @@ app = (function ($, app, document) {
                 iconsPath: "js/nicEditorIcons.gif",
             }).panelInstance('page-content');
             app.editor = nicEditors.findEditor('page-content');
+            $(".nicEdit-panelContain").parent().css("width","100%").next().css("width","100%").children().first().css("width","100%");
 
             var $selector = $("#pages");
             $.each(pages, function (index, page) {

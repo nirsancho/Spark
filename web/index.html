@@ -25,6 +25,7 @@
     <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
     <script type="text/javascript">
         $(document).bind("mobileinit", function () {
+            $.mobile.ignoreContentEnabled = true;
             $.mobile.buttonMarkup.hoverDelay = 100;
             $.mobile.buttonMarkup.corners = true;
             $.mobile.defaultPageTransition = 'none';
@@ -52,7 +53,7 @@
     <script type="text/javascript" charset="utf-8" src="../js/jquery.mobile.simpledialog2.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="../js/loader.js"></script>
-<!--    <script type="text/javascript" charset="utf-8" src="js/webapp.js"></script>-->
+    <!--    <script type="text/javascript" charset="utf-8" src="js/webapp.js"></script>-->
 
     <style>
         label {
@@ -60,24 +61,29 @@
         }
     </style>
 
-    <div data-role="page" id="page-viewer">
+    <div data-role="page" id="page-contacts">
         <div data-role="header" data-theme="b">
             <h1 data-role="page-title">Contact browser</h1>
+            <a data-text="webapp-editor" href="#page-editor" class="ui-btn"></a>
         </div>
-
-        <table cellpadding="0" cellspacing="0" border="0" class="display" id="users"></table>
+        <div data-enhance="false">
+            <table cellpadding="0" cellspacing="0" border="0" class="display" id="users" data-enhance="false"></table>
+        </div>
     </div>
 
     <div data-role="page" id="page-editor">
         <div data-role="header" data-theme="b">
             <h1 data-role="page-title">Editor</h1>
+            <a data-text="webapp-contactos" href="#page-contacts" class="ui-btn"></a>
         </div>
         <div data-role="content">
             <select id="pages"></select>
             <label data-text="editor-page-title"></label>
             <input type="text" id="page-title" />
             <label data-text="editor-page-content"></label>
-            <textarea id="page-content"></textarea>
+            <div data-enhance="false" style="width:100%">
+                <textarea id="page-content" style="width:100%" data-enhance="false"></textarea>
+            </div>
             <div class="approval-only">
                 <label data-text="approval-question"></label>
                 <input type="text" id="question" />
