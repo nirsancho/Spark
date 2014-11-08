@@ -18,6 +18,7 @@ app = (function (app) {
         "general-continue" : 'Continuar',
         "general-close" : 'Cerrar',
         "general-download" : 'Bajar',
+        "general-send" : 'Mandar',
 
         "contacts-approval-title": "Compartir con Contactos",
         "contacts-approval-content": "Tus contactos... Compartir?",
@@ -26,6 +27,10 @@ app = (function (app) {
         "approval-question" : "Pregunta de aprovar",
         "approval-dialog" : "Contenido de dialogo al no aprovar",
         "approval-dialog-title" : "Titulo de dialogo al no aprovar",
+
+        "form-name" : "Nombre",
+        "form-email" : "Email",
+        "form-tel" : "Telefono Movil",
 
         "editor-page-title" : "Titulo de Pajina",
         "editor-page-content" : "Contenido de Pajina",

@@ -43,9 +43,9 @@
             return (app.loader.is_localhost ? "js/" : "http://unusid.com/spark/js/");
         })();
 
-        app.loader.scripts = ["lang-es.js", "content.js", "user.js", "contacts.js", "parse.js", "main.js"];
+//        app.loader.scripts = ["lang-es.js", "content.js", "user.js", "contacts.js", "parse.js", "main.js"];
         app.loader.callback = function () {
-            app.init();
+//            app.init();
         };
     </script>
 
@@ -54,7 +54,16 @@
     <script type="text/javascript" charset="utf-8" src="js/deviceinformation.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="js/loader.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/lang-es.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/content.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/user.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/contacts.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/parse.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
 
+    <script>
+        app.init();
+    </script>
     <!--
     <script type="text/javascript" charset="utf-8" src="js/lang-he.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/user.js"></script>
@@ -98,6 +107,32 @@
 
     </div>
 
+
+    <div data-role="page" id="page-form">
+        <div data-role="header" data-theme="b">
+            <a href="#" data-rel="back" data-icon="back" data-text="general-back" class="ui-mini"></a>
+            <h1 data-role="page-title"></h1>
+        </div>
+        <div data-role="content">
+            <input id="form-name" type="text" data-text-placeholder="form-name"/>
+            <input id="form-tel" type="tel" data-text-placeholder="form-tel"/>
+            <input id="form-email" type="email" data-text-placeholder="form-email"/>
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a"></div>
+                <div class="ui-block-b">
+                    <a href="#" data-role="button" data-text="general-send" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right"></a>
+                </div>
+            </div>
+
+            <div>
+                <img src="css/card.jpg" style="text-align:center; width: 100%; margin-top:40px" />
+            </div>
+
+        </div>
+
+
+    </div>
 </body>
 
 </html>

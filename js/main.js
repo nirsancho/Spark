@@ -59,9 +59,10 @@ app = (function ($, app, document) {
 
             app.parse.setup();
 
-            navigator.notification.beep(1);
+//            navigator.notification.beep(1);
 
             app.user.get_username_from_device(function () {
+                $("#form-email").val(app.deviceInfo);
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                     app.user.set_current_user(user);
                     var contacts_saved = app.user.current.get("contacts_saved");
