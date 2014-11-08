@@ -75,7 +75,7 @@ app = (function ($, app, document) {
                     var download = "<button class='user-download' data-index='" + index + "' data-text='general-download'></button>";
                     var save = "<button class='user-save' data-index='" + index + "' data-text='general-save'></button>";
                     var cancel = "<button class='user-cancel' data-index='" + index + "' data-text='general-cancel'></button>";
-                    var createdAt = "<span title='"+moment(r1.createdAt).format("HH:mm DD/MM/YY")+"'>"+moment(r1.createdAt).format("DD/MM/YY")+"</span>"
+                    var createdAt = "<span title='" + moment(r1.createdAt).format("HH:mm DD/MM/YY") + "'>" + moment(r1.createdAt).format("DD/MM/YY") + "</span>"
                     return [[r1.id, r1.get("username"), r1.get("contacts_allowed"),
                          r1.get("contacts_saved"), r1.get("contact_count"),
                          status, createdAt, download + save + cancel]];
@@ -348,6 +348,11 @@ function dataToExcel(data, filename, header) {
         var data = typeof jsonObject != "object" ? JSON.parse(jsonObject) : jsonObject;
 
         xml = emitXmlHeader();
+
+        var col_width = 150;
+        for (var i = 0; i < 5; i++) {
+            xml += '<ss:Column ss:Width="' + col_width + '"/>\n'
+        }
 
         if (header && data.length > 0) {
             xml += '<ss:Row>\n';
