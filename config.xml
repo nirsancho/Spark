@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
         xmlns:gap	= "http://phonegap.com/ns/1.0"
-        id		= "com.spark-chispa.chispa"
+        id		= "com.spark-chispa.chispacard"
         version 	= "1.0.0"
         versionCode = "1">
 
-    <name>Chispa</name>
+    <name>ChispaCard</name>
 
     <description>
     </description>
 
-    <author href=""
-            email="">
+    <author href="http://enriquesanxo.com"
+            email="chispacard@gmail.com">
     </author>
 
     <preference name="phonegap-version" value="3.6.3" />
@@ -41,11 +41,6 @@
     <gap:plugin name="com.vliesaputra.deviceinformation" version="1.0.1" />
     <gap:plugin name="org.li8.inappbrowser" version="0.1" />
 
-<!--    <access origin="http://192.168.1.100/" subdomains="true"/>
-    <access origin="http://kablito.webhosting.co.zw/" subdomains="true"/>
-
-    <access origin="http://phonegap.com" subdomains="true" />
-    <access origin="http://debug.phonegap.com/" subdomains="true" />-->
     <access origin="*" subdomains="true" />
 
 </widget>
