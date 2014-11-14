@@ -40,7 +40,7 @@ app = (function ($, app, document) {
             app.deviceInfo = app.storage.get("deviceInfo", "");
 
             document.addEventListener("backbutton", function (e) {
-                var active_page = $.mobile.pageContainer.getActivePage();
+                var active_page = $.mobile.pageContainer.pagecontainer("getActivePage")[0].id;
                 app.log("BackButton: " + active_page)
                 if (active_page == '#page-0' || active_page == "#page-loading") {
                     // e.preventDefault();
