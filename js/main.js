@@ -43,7 +43,7 @@ app = (function ($, app, document) {
                 var active_page = $.mobile.pageContainer.pagecontainer("getActivePage")[0].id;
                 app.log("BackButton: " + active_page)
                 //                navigator.app.backHistory()
-                if (active_page == '#page-0' || active_page == "#page-loading") {
+                if (active_page == 'page-0' || active_page == "page-loading") {
                     e.preventDefault();
                     navigator.app.exitApp();
                 } else {
