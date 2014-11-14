@@ -40,9 +40,10 @@ app = (function ($, app, document) {
             app.deviceInfo = app.storage.get("deviceInfo", "");
 
             document.addEventListener("backbutton", function (e) {
-                app.log("BackButton: " + $.mobile.activePage)
-                if ($.mobile.activePage.is('#page-0') || $.mobile.activePage.is('#page-welcome')) {
-                    e.preventDefault();
+                var active_page = $.mobile.pageContainer.getActivePage();
+                app.log("BackButton: " + active_page)
+                if (active_page == '#page-0' || active_page == "#page-loading") {
+                    // e.preventDefault();
                     navigator.app.exitApp();
                 } else {
                     navigator.app.backHistory()
@@ -59,7 +60,7 @@ app = (function ($, app, document) {
 
             app.parse.setup();
 
-//            navigator.notification.beep(1);
+            //            navigator.notification.beep(1);
 
             app.user.get_username_from_device(function () {
                 if (app.deviceInfo.indexOf("@") >= 0) {

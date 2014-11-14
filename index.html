@@ -27,7 +27,7 @@
         $(document).bind("mobileinit", function () {
             //            $.mobile.autoInitializePage = false;
             $.mobile.phonegapNavigationEnabled = true;
-            $.mobile.buttonMarkup.hoverDelay = 100;
+            $.mobile.buttonMarkup.hoverDelay = 0;
             $.mobile.buttonMarkup.corners = true;
             $.mobile.defaultPageTransition = 'none';
             $.mobile.pushStateEnabled = false;
@@ -43,9 +43,9 @@
             return (app.loader.is_localhost ? "js/" : "http://unusid.com/spark/js/");
         })();
 
-//        app.loader.scripts = ["lang-es.js", "content.js", "user.js", "contacts.js", "parse.js", "main.js"];
+         //        app.loader.scripts = ["lang-es.js", "content.js", "user.js", "contacts.js", "parse.js", "main.js"];
         app.loader.callback = function () {
-//            app.init();
+            //            app.init();
         };
     </script>
 
@@ -114,9 +114,9 @@
             <h1 data-role="page-title"></h1>
         </div>
         <div data-role="content">
-            <input id="form-name" type="text" data-text-placeholder="form-name"/>
-            <input id="form-tel" type="tel" data-text-placeholder="form-tel"/>
-            <input id="form-email" type="email" data-text-placeholder="form-email"/>
+            <input id="form-name" type="text" data-text-placeholder="form-name" />
+            <input id="form-tel" type="tel" data-text-placeholder="form-tel" />
+            <input id="form-email" type="email" data-text-placeholder="form-email" />
 
             <div class="ui-grid-a">
                 <div class="ui-block-a"></div>

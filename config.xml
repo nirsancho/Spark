@@ -1,17 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns		= "http://www.w3.org/ns/widgets"
-        xmlns:gap	= "http://phonegap.com/ns/1.0"
-        id		= "com.spark-chispa.chispacard"
-        version 	= "1.0.0"
-        versionCode = "1">
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.spark-chispa.chispacard" version="1.0.1" versionCode="1">
 
     <name>ChispaCard</name>
 
     <description>
     </description>
 
-    <author href="http://enriquesanxo.com"
-            email="chispacard@gmail.com">
+    <author href="http://enriquesanxo.com" email="chispacard@gmail.com">
     </author>
 
     <preference name="phonegap-version" value="3.6.3" />
