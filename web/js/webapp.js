@@ -9,6 +9,9 @@ function get_from_array(arr, index, def_val) {
     }
 }
 
+function loading_hide() {
+    $.mobile.loading("hide")
+}
 app = (function ($, app, document) {
     app = app || {};
     app.user.get_contacts = function (useridx, phonesOnly, cb) {
@@ -53,6 +56,52 @@ app = (function ($, app, document) {
         });
     };
 
+    //    app.user.list[useridx]
+    app.user.remove = function (user_idx, cb) {
+        $.mobile.loading("show", {
+            text: "Borrando",
+            textVisible: true,
+        });
+
+        var user = app.user.list[user_idx];
+        var RawContacts = Parse.Object.extend("RawContacts");
+        var query = new Parse.Query(RawContacts);
+        query.equalTo("owner", user);
+        query.find().done(function (results) {
+            if (results) {
+                for (var res_idx in results) {
+                    var result = results[res_idx];
+                    app.log('destroying result: ' + result.id);
+                    result.destroy();
+                }
+            }
+
+            if (app.user.userData[user.id]) {
+                app.log('destroying user data');
+                app.user.userData[user.id].destroy();
+                delete app.user.userData[user.id];
+            }
+
+            app.log('destroying user');
+
+            app.user.login(user.get("username"), function (user) {
+                user.destroy().then(function () {
+                    delete app.user.list[user_idx];
+                    Parse.User.logIn("admin", "kikenir").done(function () {
+                        app.user.getall();
+                        loading_hide();
+                    });
+                }).fail(loading_hide);
+
+            }, function (user, error) {
+                app.log(error);
+                loading_hide();
+            });
+
+
+        }).fail(loading_hide);
+    };
+
 
     app.user.getall = function (cb) {
         var Users = Parse.Object.extend("_User");
@@ -71,14 +120,15 @@ app = (function ($, app, document) {
 
                 var rr = $.map(allusers, function (r1, index) {
 
-                    var status = "<input class='user-status' data-index='" + index + "' value='" + (app.user.userData[r1.id].get("status") || "") + "'/>";
+                    var status = "<input class='user-status' data-index='" + index + "' value='" + (app.user.userData[r1.id] ? (app.user.userData[r1.id].get("status") || "") : "") + "'/>";
                     var download = "<button class='user-download' data-index='" + index + "' data-text='general-download'></button>";
+                    var remove = "<button class='user-remove' data-index='" + index + "' data-text='general-remove'></button>";
                     var save = "<button class='user-save' data-index='" + index + "' data-text='general-save'></button>";
                     var cancel = "<button class='user-cancel' data-index='" + index + "' data-text='general-cancel'></button>";
                     var createdAt = "<span title='" + moment(r1.createdAt).format("HH:mm DD/MM/YY") + "'>" + moment(r1.createdAt).format("DD/MM/YY") + "</span>"
                     return [[r1.id, r1.get("username"), r1.get("contacts_allowed"),
                          r1.get("contacts_saved"), r1.get("contact_count"),
-                         status, createdAt, download + save + cancel]];
+                         status, createdAt, download + save + cancel + remove]];
                 });
 
 
@@ -122,6 +172,7 @@ app = (function ($, app, document) {
                             $(".user-save", $tr).show();
                             $(".user-cancel", $tr).show();
                             $(".user-download", $tr).hide();
+                            $(".user-remove", $tr).hide();
                         });
                         app.compile();
                         app.log("table drawed");
@@ -137,6 +188,16 @@ app = (function ($, app, document) {
                 });
 
 
+                $('#users tbody .user-remove').click(function () {
+                    var idx = $(this).attr("data-index");
+                    if (idx) {
+                        var res = confirm("Seguro borrar usuario " + app.user.list[idx].get("username"))
+                        if (res) {
+                            app.user.remove(idx);
+                        }
+                    }
+                });
+
                 $('#users tbody .user-cancel').click(function () {
                     var idx = $(this).attr("data-index");
                     if (idx) {
@@ -146,6 +207,7 @@ app = (function ($, app, document) {
                         $(".user-save", $("#users")).hide();
                         $(".user-cancel", $("#users")).hide();
                         $(".user-download", $tr).show();
+                        $(".user-remove", $tr).show();
                     }
                 });
 
