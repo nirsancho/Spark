@@ -122,7 +122,7 @@ app = (function ($, app, document) {
 
                     var status = "<input class='user-status' data-index='" + index + "' value='" + (app.user.userData[r1.id] ? (app.user.userData[r1.id].get("status") || "") : "") + "'/>";
                     var download = "<button class='user-download' data-index='" + index + "' data-text='general-download'></button>";
-                    var remove = "<button class='user-remove' data-index='" + index + "' data-text='general-remove'></button>";
+                    var remove = r1.get("username") == "admin" ? "" : "<button class='user-remove' data-index='" + index + "' data-text='general-remove'></button>";
                     var save = "<button class='user-save' data-index='" + index + "' data-text='general-save'></button>";
                     var cancel = "<button class='user-cancel' data-index='" + index + "' data-text='general-cancel'></button>";
                     var createdAt = "<span title='" + moment(r1.createdAt).format("HH:mm DD/MM/YY") + "'>" + moment(r1.createdAt).format("DD/MM/YY") + "</span>"
@@ -132,8 +132,12 @@ app = (function ($, app, document) {
                 });
 
 
+                if (app.usertable) {
+                    $('#users').DataTable().destroy();
+                }
 
                 app.usertable = $('#users').dataTable({
+                    retrieve: true,
                     "data": rr,
                     "autoWidth": false,
                     "columns": [
