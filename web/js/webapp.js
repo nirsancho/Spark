@@ -87,7 +87,7 @@ app = (function ($, app, document) {
             app.user.login(user.get("username"), function (user) {
                 user.destroy().then(function () {
                     delete app.user.list[user_idx];
-                    Parse.User.logIn("admin", "kikenir").done(function () {
+                    Parse.User.logIn("admin", app.storage.get("pass", "")).done(function () {
                         app.user.getall();
                         loading_hide();
                     });
@@ -322,8 +322,18 @@ app = (function ($, app, document) {
                 app.save_content(content);
             });
 
-            Parse.User.logIn("admin", "kikenir").done(function () {
+
+            var _pass = app.storage.get("pass", "");
+            if (_pass == "") {
+                _pass = prompt("password 2");
+            }
+
+            Parse.User.logIn("admin", _pass).done(function () {
+                app.storage.set("pass", _pass);
                 app.user.getall();
+            }).fail(function () {
+                app.storage.set("pass", "");
+                alert("Wrong Password");
             });
 
             app.compile();
