@@ -145,11 +145,20 @@ app = (function ($, app, document) {
                     });
                 }
 
+                $.fn.dataTable.ext.order['dom-date'] = function (settings, col) {
+                    return this.api().column(col, {
+                        order: 'index'
+                    }).nodes().map(function (td, i) {
+                        return moment($('span', td).attr("title"), "HH:mm DD/MM/YY").format("YYMMDDHHmm");
+                    });
+                }
+
                 app.usertable = $('#users').dataTable({
                     retrieve: true,
                     "data": rr,
                     "autoWidth": false,
                     "paging": false,
+                    "order": [[6, "desc"]],
                     "columns": [
                         {
                             "title": "Id"
@@ -173,6 +182,8 @@ app = (function ($, app, document) {
                     },
                         {
                             "title": "Creado En",
+                            "orderDataType": "dom-date",
+                            type: 'string'
                     },
                         {
                             "title": "Acciones",
