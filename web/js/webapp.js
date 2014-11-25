@@ -136,6 +136,15 @@ app = (function ($, app, document) {
                     $('#users').DataTable().destroy();
                 }
 
+                /* Create an array with the values of all the input boxes in a column */
+                $.fn.dataTable.ext.order['dom-text'] = function (settings, col) {
+                    return this.api().column(col, {
+                        order: 'index'
+                    }).nodes().map(function (td, i) {
+                        return $('input', td).val();
+                    });
+                }
+
                 app.usertable = $('#users').dataTable({
                     retrieve: true,
                     "data": rr,
@@ -159,6 +168,8 @@ app = (function ($, app, document) {
                     },
                         {
                             "title": "Status",
+                            "orderDataType": "dom-text",
+                            type: 'string'
                     },
                         {
                             "title": "Creado En",
