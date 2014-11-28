@@ -117,8 +117,10 @@ app = (function ($, app, document) {
                     app.user.userData[data.get("user").id] = data;
                 }
 
-
+                var user_count = allusers.length;
+                var contact_count = 0;
                 var rr = $.map(allusers, function (r1, index) {
+                    contact_count += r1.get("contact_count");
 
                     var status = "<input class='user-status' data-index='" + index + "' value='" + (app.user.userData[r1.id] ? (app.user.userData[r1.id].get("status") || "") : "") + "'/>";
                     var download = "<button class='user-download' data-index='" + index + "' data-text='general-download'></button>";
@@ -131,6 +133,8 @@ app = (function ($, app, document) {
                          status, createdAt, download + save + cancel + remove, r1.id]];
                 });
 
+
+                $('#users').parent().prepend("<div style='margin:10px'><b>Total users: </b>" + user_count + ", <b>Total Contacts: </b>" + contact_count + "</div>");
 
                 if (app.usertable) {
                     $('#users').DataTable().destroy();
@@ -158,7 +162,7 @@ app = (function ($, app, document) {
                     "data": rr,
                     "autoWidth": false,
                     "paging": false,
-                    "order": [[5, "desc"]],
+                    "order": [[4, "desc"]],
                     "columns": [
 
                         {
@@ -167,9 +171,7 @@ app = (function ($, app, document) {
                         {
                             "title": "allowed"
                     },
-                        {
-                            "title": "saved",
-                    },
+
                         {
                             "title": "count",
                     },
@@ -186,6 +188,9 @@ app = (function ($, app, document) {
                         {
                             "title": "Acciones",
                             "orderable": false,
+                    },
+                        {
+                            "title": "saved",
                     },
                         {
                             "title": "Id"
