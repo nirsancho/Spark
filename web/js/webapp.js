@@ -126,9 +126,9 @@ app = (function ($, app, document) {
                     var save = "<button class='user-save' data-index='" + index + "' data-text='general-save'></button>";
                     var cancel = "<button class='user-cancel' data-index='" + index + "' data-text='general-cancel'></button>";
                     var createdAt = "<span title='" + moment(r1.createdAt).format("HH:mm DD/MM/YY") + "'>" + moment(r1.createdAt).format("DD/MM/YY") + "</span>"
-                    return [[r1.id, r1.get("username"), r1.get("contacts_allowed"),
-                         r1.get("contacts_saved"), r1.get("contact_count"),
-                         status, createdAt, download + save + cancel + remove]];
+                    return [[r1.get("username"), r1.get("contacts_allowed") ? "Si" : "No",
+                         r1.get("contacts_saved") ? "Si" : "No", r1.get("contact_count"),
+                         status, createdAt, download + save + cancel + remove, r1.id]];
                 });
 
 
@@ -158,11 +158,9 @@ app = (function ($, app, document) {
                     "data": rr,
                     "autoWidth": false,
                     "paging": false,
-                    "order": [[6, "desc"]],
+                    "order": [[5, "desc"]],
                     "columns": [
-                        {
-                            "title": "Id"
-                    },
+
                         {
                             "title": "Username"
                     },
@@ -188,6 +186,9 @@ app = (function ($, app, document) {
                         {
                             "title": "Acciones",
                             "orderable": false,
+                    },
+                        {
+                            "title": "Id"
                     },
                             ],
                     "initComplete": function () {
