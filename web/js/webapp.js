@@ -129,8 +129,8 @@ app = (function ($, app, document) {
                     var cancel = "<button class='user-cancel' data-index='" + index + "' data-text='general-cancel'></button>";
                     var createdAt = "<span title='" + moment(r1.createdAt).format("HH:mm DD/MM/YY") + "'>" + moment(r1.createdAt).format("DD/MM/YY") + "</span>"
                     return [[r1.get("username"), r1.get("contacts_allowed") ? "Si" : "No",
-                         r1.get("contacts_saved") ? "Si" : "No", r1.get("contact_count"),
-                         status, createdAt, download + save + cancel + remove, r1.id]];
+                          r1.get("contact_count"),
+                         status, createdAt, download + save + cancel + remove, r1.get("contacts_saved") ? "Si" : "No", r1.id]];
                 });
 
 
