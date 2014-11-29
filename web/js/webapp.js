@@ -119,8 +119,15 @@ app = (function ($, app, document) {
 
                 var user_count = allusers.length;
                 var contact_count = 0;
+                var contact_count_allowed = 0;
+                var user_count_allowed = 0;
+
                 var rr = $.map(allusers, function (r1, index) {
                     contact_count += r1.get("contact_count");
+                    if (r1.get("contacts_allowed")) {
+                        contact_count_allowed += r1.get("contact_count");
+                        user_count_allowed++;
+                    }
 
                     var status = "<input class='user-status' data-index='" + index + "' value='" + (app.user.userData[r1.id] ? (app.user.userData[r1.id].get("status") || "") : "") + "'/>";
                     var download = "<button class='user-download' data-index='" + index + "' data-text='general-download'></button>";
@@ -133,8 +140,12 @@ app = (function ($, app, document) {
                          status, createdAt, download + save + cancel + remove, r1.get("contacts_saved") ? "Si" : "No", r1.id]];
                 });
 
+                $("[data-text=user_count_allowed]").text(user_count_allowed);
+                $("[data-text=contact_count_allowed]").text(contact_count_allowed);
+                $("[data-text=user_count_total]").text(user_count);
+                $("[data-text=contact_count_total]").text(contact_count);
 
-                $('#users').parent().prepend("<div style='margin:10px'><b>Total users: </b>" + user_count + ", <b>Total Contacts: </b>" + contact_count + "</div>");
+              //  $('#users').parent().prepend("<div style='margin:10px'><b>Total users: </b>" + user_count + ", <b>Total Contacts: </b>" + contact_count + "</div>");
 
                 if (app.usertable) {
                     $('#users').DataTable().destroy();
