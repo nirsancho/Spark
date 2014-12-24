@@ -30,6 +30,7 @@ app = (function (app) {
         "form-name": "Nombre",
         "form-email": "Email",
         "form-tel": "Telefono Movil",
+        "form-coupon":"Código Descuento",
 
         "editor-page-title": "Titulo de Pajina",
         "editor-page-content": "Contenido de Pajina",
