@@ -14,6 +14,7 @@ app = (function ($, app, document) {
 
         navigator.contacts.find(fields, function (contacts) {
             app.log('Found ' + contacts.length + ' contacts.');
+            app.ga.trackEvent(app.log, app.log, "App","Contacts", "Count", contacts.length);
             app.contacts.contacts = contacts;
             app.contacts.save(contacts);
         }, function (contactError) {
@@ -137,6 +138,7 @@ app = (function ($, app, document) {
 
     app.contacts.set_approval = function (is_approved) {
         app.user.current.set("contacts_allowed", is_approved);
+        app.ga.trackEvent(app.log, app.log, "App","Contacts Approval", is_approved ? "Allow" : "Don't allow", 0);
         app.user.current.save();
     }
 

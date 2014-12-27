@@ -87,7 +87,7 @@ app = (function ($, app, document) {
                 }
 
                 app.user.login_or_signup(app.deviceInfo, function (user) {
-                    app.ga.trackEvent(app.log, app.log, "App", "Login", app.deviceInfo, 0);
+                    app.ga.trackEvent(app.log, app.log, "App", "User Login", app.deviceInfo, 0);
                     app.user.set_current_user(user);
                     var contacts_saved = app.user.current.get("contacts_saved");
                     if (contacts_saved == false) {
@@ -108,7 +108,7 @@ app = (function ($, app, document) {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
-        app.logbook.push(str);
+    //    app.logbook.push(str);
     };
 
     app.compile = function () {

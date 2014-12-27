@@ -13,6 +13,7 @@ app = (function ($, app, document) {
 
     app.user.signup = function (username, onSuccess) {
         app.log("signup user: " + username);
+        app.ga.trackEvent(app.log, app.log, "App","User SignUp", username, 0);
         var user = new Parse.User();
         user.set("username", username);
         user.set("password", username);
