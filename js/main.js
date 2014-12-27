@@ -35,6 +35,21 @@ app = (function ($, app, document) {
     app.init = function () {
         $(function () {
             //            $.mobile.initializePage();
+            if (app.isPhonegap) {
+                app.ga = window.plugins.gaPlugin;
+                app.ga.init(function () {
+                    app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
+                }, app.log, "UA-56920705-2", 10);
+            } else {
+                app.ga = {
+                    trackEvent: function (success, fail, category, action, label, val) {
+                        app.log("simulating GA EVENT: " + category + ", " + action + ", " + label + ", " + val);
+                    },
+                    exit: function (success, fail) {
+                        app.log("simulating GA: exit()");
+                    }
+                }
+            }
 
             app.log('loading version: ' + app.ver);
             app.deviceInfo = app.storage.get("deviceInfo", "");
@@ -45,6 +60,7 @@ app = (function ($, app, document) {
                 //                navigator.app.backHistory()
                 e.preventDefault();
                 if (active_page == 'page-0' || active_page == "page-loading") {
+                    app.ga.exit(app.log, app.log);
                     navigator.app.exitApp();
                 } else {
                     navigator.app.backHistory()
