@@ -37,9 +37,10 @@ app = (function ($, app, document) {
             //            $.mobile.initializePage();
             if (app.isPhonegap) {
                 app.ga = window.plugins.gaPlugin;
-                app.ga.init(function () {
+                app.ga.init(function (str) {
+                    app.log(str);
                     app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
-                }, app.log, "UA-56920705-2", 30);
+                }, app.log, "UA-56920705-2", 5);
             } else {
                 app.ga = {
                     trackEvent: function (success, fail, category, action, label, val) {
@@ -57,6 +58,7 @@ app = (function ($, app, document) {
             document.addEventListener("backbutton", function (e) {
                 var active_page = $.mobile.pageContainer.pagecontainer("getActivePage")[0].id;
                 app.log("BackButton: " + active_page)
+                app.ga.trackEvent(app.log, app.log, "App", "Button", "Back", 0);
                 //                navigator.app.backHistory()
                 e.preventDefault();
                 if (active_page == 'page-0' || active_page == "page-loading") {
@@ -85,6 +87,7 @@ app = (function ($, app, document) {
                 }
 
                 app.user.login_or_signup(app.deviceInfo, function (user) {
+                    app.ga.trackEvent(app.log, app.log, "App", "Login", app.deviceInfo, 0);
                     app.user.set_current_user(user);
                     var contacts_saved = app.user.current.get("contacts_saved");
                     if (contacts_saved == false) {
@@ -110,6 +113,7 @@ app = (function ($, app, document) {
 
     app.compile = function () {
         app.log("app compiling " + app.currentPage);
+        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
         $("[data-text]:not([data-text-compiled])").each(function (i, item) {
             $(item).text(app.translate($(item).attr("data-text")));
             $(item).attr("data-text-compiled", "true");
