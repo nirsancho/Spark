@@ -35,7 +35,7 @@ app = (function ($, app, document) {
     app.init = function () {
         $(function () {
             //            $.mobile.initializePage();
-            if (app.isPhonegap) {
+            if (app.isPhonegap || (window.plugins && window.plugins.gaPlugin)) {
                 app.ga = window.plugins.gaPlugin;
                 app.ga.init(function () {
                     app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
