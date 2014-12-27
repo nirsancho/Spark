@@ -39,7 +39,7 @@ app = (function ($, app, document) {
                 app.ga = window.plugins.gaPlugin;
                 app.ga.init(function () {
                     app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
-                }, app.log, "UA-56920705-2", 10);
+                }, app.log, "UA-56920705-2", 30);
             } else {
                 app.ga = {
                     trackEvent: function (success, fail, category, action, label, val) {
