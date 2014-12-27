@@ -105,7 +105,7 @@ app = (function ($, app, document) {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
-        // app.logbook.push(str);
+        app.logbook.push(str);
     };
 
     app.compile = function () {
