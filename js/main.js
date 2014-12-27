@@ -32,6 +32,15 @@ app = (function ($, app, document) {
     app.refreshData = true;
     app.manualEnhace = false;
 
+    app.ga = {
+        trackEvent: function (success, fail, category, action, label, val) {
+            app.log("simulating GA EVENT: " + category + ", " + action + ", " + label + ", " + val);
+        },
+        exit: function (success, fail) {
+            app.log("simulating GA: exit()");
+        }
+    }
+
     app.init = function () {
         $(function () {
             //            $.mobile.initializePage();
@@ -41,15 +50,6 @@ app = (function ($, app, document) {
                     app.log(str);
                     app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
                 }, app.log, "UA-56920705-2", 5);
-            } else {
-                app.ga = {
-                    trackEvent: function (success, fail, category, action, label, val) {
-                        app.log("simulating GA EVENT: " + category + ", " + action + ", " + label + ", " + val);
-                    },
-                    exit: function (success, fail) {
-                        app.log("simulating GA: exit()");
-                    }
-                }
             }
 
             app.log('loading version: ' + app.ver);
@@ -108,7 +108,7 @@ app = (function ($, app, document) {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
-    //    app.logbook.push(str);
+        //    app.logbook.push(str);
     };
 
     app.compile = function () {
