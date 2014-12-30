@@ -68,6 +68,12 @@ app = (function ($, app, document) {
                 success();
             }
         },
+        trackPage: function(success, fail, pageURL) {
+            app.log("simulating GA TrackPage: " + pageURL);
+            if (success) {
+                success();
+            }
+        },
         exit: function (success, fail) {
             app.log("simulating GA: exit()");
             if (success) {
@@ -201,8 +207,10 @@ app = (function ($, app, document) {
     };
 
     app.compile = function () {
+
         app.log("app compiling " + app.currentPage);
-        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
+        app.ga.trackPage(app.log, app.log, app.currentPage);
+//        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
         $("[data-text]:not([data-text-compiled])").each(function (i, item) {
             $(item).text(app.translate($(item).attr("data-text")));
             $(item).attr("data-text-compiled", "true");
