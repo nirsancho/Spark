@@ -1,5 +1,6 @@
 console.log("main.js")
 console.log(app)
+var g_debug = true;
 
 function isConnected() {
     app.log("checkConnection()");
@@ -47,8 +48,8 @@ app = (function ($, app, document) {
         return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
     })();
 
-    if (app.isPhonegap) {
-//        install_debug(app.debug_url);
+    if (app.isPhonegap && g_debug) {
+        install_debug(app.debug_url);
     }
 
     app.url = (function () {
@@ -68,7 +69,7 @@ app = (function ($, app, document) {
                 success();
             }
         },
-        trackPage: function(success, fail, pageURL) {
+        trackPage: function (success, fail, pageURL) {
             app.log("simulating GA TrackPage: " + pageURL);
             if (success) {
                 success();
@@ -193,15 +194,15 @@ app = (function ($, app, document) {
     app.log = function (str) {
         if (typeof str == "string") {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
+            if (g_debug) {
+                if (app.logbook.length == 0) {
+                    app.logbook = app.storage.get("logbook", []);
+                    app.logbook.push("----- NEW SESSION ----");
+                }
 
-//            if (app.logbook.length == 0) {
-//                app.logbook = app.storage.get("logbook", []);
-//                app.logbook.push("----- NEW SESSION ----");
-//            }
-//
-//            app.logbook.push(str);
-//            app.storage.set("logbook", app.logbook);
-
+                app.logbook.push(str);
+                app.storage.set("logbook", app.logbook);
+            }
         }
         console.log(str);
     };
@@ -210,7 +211,7 @@ app = (function ($, app, document) {
 
         app.log("app compiling " + app.currentPage);
         app.ga.trackPage(app.log, app.log, app.currentPage);
-//        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
+        //        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
         $("[data-text]:not([data-text-compiled])").each(function (i, item) {
             $(item).text(app.translate($(item).attr("data-text")));
             $(item).attr("data-text-compiled", "true");
