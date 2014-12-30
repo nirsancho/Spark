@@ -1,6 +1,6 @@
 console.log("main.js")
 console.log(app)
-var g_debug = true;
+var g_debug = false;
 
 function isConnected() {
     app.log("checkConnection()");
@@ -115,7 +115,12 @@ app = (function ($, app, document) {
                             app.log(str);
                             navigator.app.exitApp();
                         }
-                        app.ga.exit(log_and_exit, log_and_exit);
+                        var ga_exit = function() {
+                            app.ga.exit(log_and_exit, log_and_exit);
+                        }
+
+                        app.ga.trackEvent(ga_exit, ga_exit, "App", "exit", "exit", 0);
+
                         setTimeout(navigator.app.exitApp, 1000);
                     } else {
                         navigator.app.backHistory()
