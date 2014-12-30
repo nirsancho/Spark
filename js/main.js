@@ -118,7 +118,14 @@ app = (function ($, app, document) {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
+
+        if (app.logbook.length == 0) {
+            app.logbook = app.storage.get("logbook", []);
+            app.logbook.push("----- NEW SESSION ----");
+        }
+
         app.logbook.push(str);
+        app.storage.set("logbook", app.logbook);
     };
 
     app.compile = function () {
