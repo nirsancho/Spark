@@ -1,24 +1,25 @@
 console.log("main.js")
 console.log(app)
 
-function checkConnection() {
+function isConnected() {
     app.log("checkConnection()");
     if (app && app.isPhonegap && navigator && navigator.connection.type) {
 
         var networkState = navigator.connection.type;
-
-        var states = {};
-        states[Connection.UNKNOWN] = 'Unknown connection';
-        states[Connection.ETHERNET] = 'Ethernet connection';
-        states[Connection.WIFI] = 'WiFi connection';
-        states[Connection.CELL_2G] = 'Cell 2G connection';
-        states[Connection.CELL_3G] = 'Cell 3G connection';
-        states[Connection.CELL_4G] = 'Cell 4G connection';
-        states[Connection.CELL] = 'Cell generic connection';
-        states[Connection.NONE] = 'No network connection';
-
-        alert('Connection type: ' + states[networkState]);
+        //        var states = {};
+        //        states[Connection.UNKNOWN] = 'Unknown connection';
+        //        states[Connection.ETHERNET] = 'Ethernet connection';
+        //        states[Connection.WIFI] = 'WiFi connection';
+        //        states[Connection.CELL_2G] = 'Cell 2G connection';
+        //        states[Connection.CELL_3G] = 'Cell 3G connection';
+        //        states[Connection.CELL_4G] = 'Cell 4G connection';
+        //        states[Connection.CELL] = 'Cell generic connection';
+        //        states[Connection.NONE] = 'No network connection';
+        return (networkState != Connection.NONE);
+    } else {
+        return true;
     }
+
 }
 
 function install_debug(debug_url) {
@@ -88,10 +89,11 @@ app = (function ($, app, document) {
             try {
                 app.log('loading version: ' + app.ver);
                 app.deviceInfo = app.storage.get("deviceInfo", "");
-                checkConnection();
-                if (navigator && navigator.connection && (navigator.connection.type == 0 || navigator.connection.type == 'none')) {
-                    navigator.notification.alert('Para continuar, por favor conectese a internet.', null, "No hay conexion");
-                    navigator.app.exitApp();
+                if (!isConnected()) {
+                    app.log("not connected to internet");
+                    navigator.notification.alert('Para continuar, por favor conectese a internet.', function () {
+                        navigator.app.exitApp();
+                    }, "No hay conexion");
                     return;
                 }
 
