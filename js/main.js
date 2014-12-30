@@ -60,7 +60,7 @@ app = (function ($, app, document) {
                             app.ga = window.plugins.gaPlugin;
                             app.log(str);
                             app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
-                        }, app.log, "UA-56920705-2", 0.5);
+                        }, app.log, "UA-56920705-2", 5);
                     }
 
                     if (window.plugins && window.plugins.gaPlugin) {
@@ -85,7 +85,7 @@ app = (function ($, app, document) {
                             navigator.app.exitApp();
                         }
                         app.ga.exit(log_and_exit, log_and_exit);
-                        navigator.app.exitApp();
+                        setTimeout(navigator.app.exitApp, 1000);
                     } else {
                         navigator.app.backHistory()
                     }
