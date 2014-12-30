@@ -48,7 +48,10 @@ app = (function ($, app, document) {
     }
 
     app.init = function () {
+        app.log("app.init");
         $(function () {
+            app.log("app.jquery.ready");
+
             //            $.mobile.initializePage();
             if (app.isPhonegap) {
                 window.plugins.gaPlugin.init(function (str) {
