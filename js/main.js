@@ -51,7 +51,7 @@ app = (function ($, app, document) {
         app.log("app.init");
         $(function () {
             app.log("app.jquery.ready");
-
+            try {
             //            $.mobile.initializePage();
             if (app.isPhonegap) {
                 window.plugins.gaPlugin.init(function (str) {
@@ -111,7 +111,10 @@ app = (function ($, app, document) {
                     }
                 });
             });
-
+            } catch (err) {
+                setTimeout(function(){console.log("Cathed error"); console.log(err);}, 5000 );
+                app.log(err);
+            }
         });
     };
 
