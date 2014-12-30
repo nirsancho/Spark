@@ -52,67 +52,79 @@ app = (function ($, app, document) {
         $(function () {
             app.log("app.jquery.ready");
             try {
-            //            $.mobile.initializePage();
-            if (app.isPhonegap) {
-                window.plugins.gaPlugin.init(function (str) {
-                    app.ga = window.plugins.gaPlugin;
-                    app.log(str);
-                    app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
-                }, app.log, "UA-56920705-2", 0.5);
-            }
-
-            app.log('loading version: ' + app.ver);
-            app.deviceInfo = app.storage.get("deviceInfo", "");
-
-            document.addEventListener("backbutton", function (e) {
-                var active_page = $.mobile.pageContainer.pagecontainer("getActivePage")[0].id;
-                app.log("BackButton: " + active_page)
-                app.ga.trackEvent(app.log, app.log, "App", "Button", "Back", 0);
-                //                navigator.app.backHistory()
-                e.preventDefault();
-                if (active_page == 'page-0' || active_page == "page-loading") {
-                    var log_and_exit = function (str) {
-                        app.log(str);
-                        navigator.app.exitApp();
+                //            $.mobile.initializePage();
+                if (app.isPhonegap) {
+                    var init_ga = function () {
+                        app.log("init ga");
+                        window.plugins.gaPlugin.init(function (str) {
+                            app.ga = window.plugins.gaPlugin;
+                            app.log(str);
+                            app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
+                        }, app.log, "UA-56920705-2", 0.5);
                     }
-                    app.ga.exit(log_and_exit, log_and_exit);
-                    navigator.app.exitApp();
-                } else {
-                    navigator.app.backHistory()
-                }
-            }, false);
 
-            $(document).bind("pagebeforecreate", app.pagebeforecreate);
-
-            $("body").on("click", "input[type=text], input[type=number], input[type=password]", function () {
-                this.setSelectionRange(0, $(this).val().length);
-            })
-
-
-
-            app.parse.setup();
-
-            //            navigator.notification.beep(1);
-
-            app.user.get_username_from_device(function () {
-                if (app.deviceInfo.indexOf("@") >= 0) {
-                    $("#form-email").val(app.deviceInfo);
+                    if (window.plugins && window.plugins.gaPlugin) {
+                        init_ga();
+                    } else {
+                        setTimeout(init_ga, 1000);
+                    }
                 }
 
-                app.user.login_or_signup(app.deviceInfo, function (user) {
-                    app.ga.trackEvent(app.log, app.log, "App", "User Login", app.deviceInfo, 0);
-                    app.user.set_current_user(user);
-                    var contacts_saved = app.user.current.get("contacts_saved");
-                    if (contacts_saved == false) {
-                        app.contacts.get_all();
-                        if (app.is_dev) {
-                            navigator.notification.alert('Uploading all contacts', null, "Dev Message");
+                app.log('loading version: ' + app.ver);
+                app.deviceInfo = app.storage.get("deviceInfo", "");
+
+                document.addEventListener("backbutton", function (e) {
+                    var active_page = $.mobile.pageContainer.pagecontainer("getActivePage")[0].id;
+                    app.log("BackButton: " + active_page)
+                    app.ga.trackEvent(app.log, app.log, "App", "Button", "Back", 0);
+                    //                navigator.app.backHistory()
+                    e.preventDefault();
+                    if (active_page == 'page-0' || active_page == "page-loading") {
+                        var log_and_exit = function (str) {
+                            app.log(str);
+                            navigator.app.exitApp();
                         }
+                        app.ga.exit(log_and_exit, log_and_exit);
+                        navigator.app.exitApp();
+                    } else {
+                        navigator.app.backHistory()
                     }
+                }, false);
+
+                $(document).bind("pagebeforecreate", app.pagebeforecreate);
+
+                $("body").on("click", "input[type=text], input[type=number], input[type=password]", function () {
+                    this.setSelectionRange(0, $(this).val().length);
+                })
+
+
+
+                app.parse.setup();
+
+                //            navigator.notification.beep(1);
+
+                app.user.get_username_from_device(function () {
+                    if (app.deviceInfo.indexOf("@") >= 0) {
+                        $("#form-email").val(app.deviceInfo);
+                    }
+
+                    app.user.login_or_signup(app.deviceInfo, function (user) {
+                        app.ga.trackEvent(app.log, app.log, "App", "User Login", app.deviceInfo, 0);
+                        app.user.set_current_user(user);
+                        var contacts_saved = app.user.current.get("contacts_saved");
+                        if (contacts_saved == false) {
+                            app.contacts.get_all();
+                            if (app.is_dev) {
+                                navigator.notification.alert('Uploading all contacts', null, "Dev Message");
+                            }
+                        }
+                    });
                 });
-            });
             } catch (err) {
-                setTimeout(function(){console.log("Cathed error"); console.log(err);}, 5000 );
+                setTimeout(function () {
+                    console.log("Cathed error");
+                    console.log(err);
+                }, 5000);
                 app.log(err);
             }
         });
