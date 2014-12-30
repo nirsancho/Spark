@@ -48,7 +48,7 @@ app = (function ($, app, document) {
     })();
 
     if (app.isPhonegap) {
-        install_debug(app.debug_url);
+//        install_debug(app.debug_url);
     }
 
     app.url = (function () {
@@ -188,13 +188,13 @@ app = (function ($, app, document) {
         if (typeof str == "string") {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
 
-            if (app.logbook.length == 0) {
-                app.logbook = app.storage.get("logbook", []);
-                app.logbook.push("----- NEW SESSION ----");
-            }
-
-            app.logbook.push(str);
-            app.storage.set("logbook", app.logbook);
+//            if (app.logbook.length == 0) {
+//                app.logbook = app.storage.get("logbook", []);
+//                app.logbook.push("----- NEW SESSION ----");
+//            }
+//
+//            app.logbook.push(str);
+//            app.storage.set("logbook", app.logbook);
 
         }
         console.log(str);
