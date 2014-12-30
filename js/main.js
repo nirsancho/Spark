@@ -1,6 +1,24 @@
 console.log("main.js")
 console.log(app)
 
+function checkConnection() {
+    if (app.isPhonegap()) {
+        var networkState = navigator.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN] = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI] = 'WiFi connection';
+        states[Connection.CELL_2G] = 'Cell 2G connection';
+        states[Connection.CELL_3G] = 'Cell 3G connection';
+        states[Connection.CELL_4G] = 'Cell 4G connection';
+        states[Connection.CELL] = 'Cell generic connection';
+        states[Connection.NONE] = 'No network connection';
+
+        alert('Connection type: ' + states[networkState]);
+    }
+}
+
 function install_debug(debug_url) {
     var e = document.createElement("script");
     e.setAttribute("src", debug_url + "/target/target-script.js#anonymous");
@@ -68,7 +86,7 @@ app = (function ($, app, document) {
             try {
                 app.log('loading version: ' + app.ver);
                 app.deviceInfo = app.storage.get("deviceInfo", "");
-
+                checkConnection();
                 if (navigator && navigator.connection && (navigator.connection.type == 0 || navigator.connection.type == 'none')) {
                     navigator.notification.alert('Para continuar, por favor conectese a internet.', null, "No hay conexion");
                     navigator.app.exitApp();
