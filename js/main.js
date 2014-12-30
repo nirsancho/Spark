@@ -73,7 +73,7 @@ app = (function ($, app, document) {
                         navigator.app.exitApp();
                     }
                     app.ga.exit(log_and_exit, log_and_exit);
-
+                    navigator.app.exitApp();
                 } else {
                     navigator.app.backHistory()
                 }
