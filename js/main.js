@@ -216,7 +216,7 @@ app = (function ($, app, document) {
 
         app.log("app compiling " + app.currentPage);
         app.ga.trackPage(app.log, app.log, app.currentPage);
-        //        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
+        app.ga.trackEvent(app.log, app.log, "App", "Page", app.currentPage, 0);
         $("[data-text]:not([data-text-compiled])").each(function (i, item) {
             $(item).text(app.translate($(item).attr("data-text")));
             $(item).attr("data-text-compiled", "true");
