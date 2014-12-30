@@ -134,7 +134,7 @@ app = (function ($, app, document) {
             $("[data-role=page-title]", $html).html(page_form.title);
             $("[data-role=content]", $html).prepend(page_form.body);
             $("[data-text=general-send]", $html).on("click", function (e) {
-                app.ga.trackEvent(app.log, app.log, "App", "Form Sent", "tel: " + $("#form-tel").val() +", code: " + $("#form-coupon").val() , 0);
+                app.ga.trackEvent(app.log, app.log, "App", "Form Sent", "email: " + $("#form-email").val() + "tel: " + $("#form-tel").val() +", code: " + $("#form-coupon").val() , 0);
                     var form_data = {
                         appId: 276960,
                         ownerEmail: "sancho@sefarad.com"
