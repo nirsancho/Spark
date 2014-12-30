@@ -35,9 +35,15 @@ app = (function ($, app, document) {
     app.ga = {
         trackEvent: function (success, fail, category, action, label, val) {
             app.log("simulating GA EVENT: " + category + ", " + action + ", " + label + ", " + val);
+            if(success) {
+                success();
+            }
         },
         exit: function (success, fail) {
             app.log("simulating GA: exit()");
+            if(success) {
+                success();
+            }
         }
     }
 
@@ -62,8 +68,12 @@ app = (function ($, app, document) {
                 //                navigator.app.backHistory()
                 e.preventDefault();
                 if (active_page == 'page-0' || active_page == "page-loading") {
-                    app.ga.exit(app.log, app.log);
-                    navigator.app.exitApp();
+                    var log_and_exit = function(str) {
+                        app.log(str);
+                        navigator.app.exitApp();
+                    }
+                    app.ga.exit(log_and_exit, log_and_exit);
+
                 } else {
                     navigator.app.backHistory()
                 }
@@ -108,7 +118,7 @@ app = (function ($, app, document) {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
         }
         console.log(str);
-        //    app.logbook.push(str);
+        app.logbook.push(str);
     };
 
     app.compile = function () {
