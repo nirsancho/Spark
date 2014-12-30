@@ -7,6 +7,14 @@ function install_debug(debug_url) {
     document.getElementsByTagName("body")[0].appendChild(e);
 }
 
+function global_catch(err) {
+    setTimeout(function () {
+        console.log("Cathed error");
+        console.log(err);
+    }, 5000);
+    app.log(err);
+}
+
 app = (function ($, app, document) {
     app = app || {};
     app.load_timestamp = new Date().getTime();
@@ -44,32 +52,20 @@ app = (function ($, app, document) {
             if (success) {
                 success();
             }
+        },
+        init: function (success, fail) {
+            app.log("simulating GA: init()");
+            if (success) {
+                success();
+            }
         }
     }
 
     app.init = function () {
         app.log("app.init");
-        $(function () {
-            app.log("app.jquery.ready");
+        var app_init = function () {
+            app.log("var app_init");
             try {
-                //            $.mobile.initializePage();
-                if (app.isPhonegap) {
-                    var init_ga = function () {
-                        app.log("init ga");
-                        window.plugins.gaPlugin.init(function (str) {
-                            app.ga = window.plugins.gaPlugin;
-                            app.log(str);
-                            app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
-                        }, app.log, "UA-56920705-2", 5);
-                    }
-
-                    if (window.plugins && window.plugins.gaPlugin) {
-                        init_ga();
-                    } else {
-                        setTimeout(init_ga, 1000);
-                    }
-                }
-
                 app.log('loading version: ' + app.ver);
                 app.deviceInfo = app.storage.get("deviceInfo", "");
 
@@ -121,11 +117,40 @@ app = (function ($, app, document) {
                     });
                 });
             } catch (err) {
-                setTimeout(function () {
-                    console.log("Cathed error");
-                    console.log(err);
-                }, 5000);
-                app.log(err);
+                global_catch(err);
+            }
+        };
+
+        $(function () {
+            app.log("app.jquery.ready");
+            try {
+                if (app.isPhonegap) {
+                    var init_ga = function () {
+                        app.log("init ga");
+                        if (window.plugins && window.plugins.gaPlugin) {
+                            window.plugins.gaPlugin.init(function (str) {
+                                app.ga = window.plugins.gaPlugin;
+                                app.log(str);
+                                app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
+                                app_init();
+                            }, app_init, "UA-56920705-2", 5);
+                        } else {
+                            app.log("GA init failed, loading app");
+                            app_init();
+                        }
+                    }
+
+                    if (window.plugins && window.plugins.gaPlugin) {
+                        init_ga();
+                    } else {
+                        setTimeout(init_ga, 1000);
+                    }
+                } else {
+                    app.log("not phonegap");
+                    app_init();
+                }
+            } catch (err) {
+                global_catch(err);
             }
         });
     };
