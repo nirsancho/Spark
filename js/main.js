@@ -2,6 +2,7 @@ console.log("main.js")
 console.log(app)
 
 function checkConnection() {
+    app.log("checkConnection()");
     if (app && app.isPhonegap) {
         var networkState = navigator.connection.type;
 
