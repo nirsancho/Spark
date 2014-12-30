@@ -69,6 +69,12 @@ app = (function ($, app, document) {
                 app.log('loading version: ' + app.ver);
                 app.deviceInfo = app.storage.get("deviceInfo", "");
 
+                if (navigator && navigator.connection && (navigator.connection.type == 0 || navigator.connection.type == 'none')) {
+                    navigator.notification.alert('Para continuar, por favor conectese a internet.', null, "No hay conexion");
+                    navigator.app.exitApp();
+                    return;
+                }
+
                 document.addEventListener("backbutton", function (e) {
                     var active_page = $.mobile.pageContainer.pagecontainer("getActivePage")[0].id;
                     app.log("BackButton: " + active_page)
