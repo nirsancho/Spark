@@ -35,13 +35,13 @@ app = (function ($, app, document) {
     app.ga = {
         trackEvent: function (success, fail, category, action, label, val) {
             app.log("simulating GA EVENT: " + category + ", " + action + ", " + label + ", " + val);
-            if(success) {
+            if (success) {
                 success();
             }
         },
         exit: function (success, fail) {
             app.log("simulating GA: exit()");
-            if(success) {
+            if (success) {
                 success();
             }
         }
@@ -68,7 +68,7 @@ app = (function ($, app, document) {
                 //                navigator.app.backHistory()
                 e.preventDefault();
                 if (active_page == 'page-0' || active_page == "page-loading") {
-                    var log_and_exit = function(str) {
+                    var log_and_exit = function (str) {
                         app.log(str);
                         navigator.app.exitApp();
                     }
@@ -116,16 +116,17 @@ app = (function ($, app, document) {
     app.log = function (str) {
         if (typeof str == "string") {
             str = parseInt((new Date().getTime() - app.load_timestamp) / 1000) + ": " + str;
+
+            if (app.logbook.length == 0) {
+                app.logbook = app.storage.get("logbook", []);
+                app.logbook.push("----- NEW SESSION ----");
+            }
+
+            app.logbook.push(str);
+            app.storage.set("logbook", app.logbook);
+
         }
         console.log(str);
-
-        if (app.logbook.length == 0) {
-            app.logbook = app.storage.get("logbook", []);
-            app.logbook.push("----- NEW SESSION ----");
-        }
-
-        app.logbook.push(str);
-        app.storage.set("logbook", app.logbook);
     };
 
     app.compile = function () {
