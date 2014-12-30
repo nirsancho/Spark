@@ -58,7 +58,7 @@ app = (function ($, app, document) {
                     app.ga = window.plugins.gaPlugin;
                     app.log(str);
                     app.ga.trackEvent(app.log, app.log, "App", "Loaded", "NA", 0);
-                }, app.log, "UA-56920705-2", 5);
+                }, app.log, "UA-56920705-2", 0.5);
             }
 
             app.log('loading version: ' + app.ver);
