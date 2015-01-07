@@ -173,6 +173,7 @@ app = (function ($, app, document) {
                     "data": rr,
                     "autoWidth": false,
                     "paging": false,
+                    "pageLength":999999,
                     "order": [[4, "desc"]],
                     "columns": [
 
