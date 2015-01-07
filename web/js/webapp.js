@@ -106,7 +106,7 @@ app = (function ($, app, document) {
     app.user.getall = function (cb) {
         var Users = Parse.Object.extend("_User");
         var query = new Parse.Query(Users);
-        query.find().done(function (allusers) {
+        query.limit(1000).find().done(function (allusers) {
             app.user.list = allusers;
             var UserData = Parse.Object.extend("UserData");
             var query = new Parse.Query(UserData);
