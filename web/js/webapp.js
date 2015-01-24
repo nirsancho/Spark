@@ -110,7 +110,7 @@ app = (function ($, app, document) {
             app.user.list = allusers;
             var UserData = Parse.Object.extend("UserData");
             var query = new Parse.Query(UserData);
-            query.find().done(function (userData) {
+            query.limit(1000).find().done(function (userData) {
                 app.user.userData = {};
                 for (var data in userData) {
                     data = userData[data];
